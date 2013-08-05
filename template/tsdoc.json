@@ -32,6 +32,5 @@
 		"footer"		: "",
 		"copyright"		: "$PROJECTNAME$ Copyright © $YEAR$ $USERNAME$.",
 		"outputSourceFiles" : true
-
 	}
 }
