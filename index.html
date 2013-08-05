@@ -33,7 +33,13 @@
 
 <p>A <a href="http://usejsdoc.org/">JSDoc3</a> base themed generator generator for use with Typescript Projects, uses a highly modified version <a href="https://github.com/terryweiss/docstrap/">Docstrap</a> JsDoc3 Template. </p>
 
-<p>Actually it only supports parsing of plain comments, also it needs some added "manual" anotation. <a href="https://github.com/see" class="user-mention">@see</a> docs for more info. </p>
+<p>Actually it only supports parsing of plain comments, also it needs some added "manual" anotation. You can see an output <a href="http://xperiments.github.io/TSDoc/docs/index.html">Example</a>.</p>
+
+<h2>
+<a name="annotating-your-ts-project" class="anchor" href="#annotating-your-ts-project"><span class="octicon octicon-link"></span></a>Annotating your TS project</h2>
+
+<p>See an example of annotated comments that works with TS
+<a href="https://github.com/xperiments/TSDoc/blob/master/DocGuide.md">Example</a></p>
 
 <h2>
 <a name="instalation" class="anchor" href="#instalation"><span class="octicon octicon-link"></span></a>Instalation</h2>
@@ -49,7 +55,33 @@
 
 <p>TSDoc uses the same <a href="http://usejsdoc.org/about-configuring-jsdoc.html">conf.json</a> (now tsdoc.json) config file used in JsDoc3, but adds the following new options:</p>
 
-<h3>
+<pre><code>"tsdoc":{
+    "source"            :"{string}",
+    "destination"       :"{string}",
+    "systemName"        :"{string}",
+    "footer"            :"{string}",
+    "copyright"         :"{string}",
+    "outputSourceFiles" :{boolean}
+}
+</code></pre>
+
+<h4>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h4>
+
+<ul>
+<li>
+<strong>source</strong> Source folder where search .ts files</li>
+<li>
+<strong>destination</strong> Documentation output folder</li>
+<li>
+<strong>systemName</strong> The project name</li>
+<li>
+<strong>footer</strong> Footer string added to each page</li>
+<li>
+<strong>copyright</strong> Copyright string added to each page</li>
+<li>
+<strong>outputSourceFiles</strong> Set to true to enable source files processing </li>
+</ul><h3>
 <a name="adding-a-default-tsdocjson-file" class="anchor" href="#adding-a-default-tsdocjson-file"><span class="octicon octicon-link"></span></a>Adding a default tsdoc.json file</h3>
 
 <p>You can automatically add a new tsdoc.json file to any folder in yor system, typing in your console:</p>
@@ -73,7 +105,7 @@ Overrides tsdoc.json destination settings.
 <h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
-<p>Copyright (c) 2013 Pedro Casaubon aka xperiments. All rights reserved.</p>
+<p>Copyright (c) 2013 Pedro Casaubon. All rights reserved.</p>
 
 <p>Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
