@@ -52,7 +52,7 @@ You can automatically add a new tsdoc.json file to any folder in yor system, typ
 	
 ## License ##
 		
-Copyright (c) 2013 Pedro Casaubon aka xperiments. All rights reserved.
+Copyright (c) 2013 Pedro Casaubon. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
