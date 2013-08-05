@@ -2,7 +2,13 @@
 
 A [JSDoc3](http://usejsdoc.org/) base themed generator generator for use with Typescript Projects, uses a highly modified version [Docstrap](https://github.com/terryweiss/docstrap/) JsDoc3 Template. 
 
-Actually it only supports parsing of plain comments, also it needs some added "manual" anotation. @see docs for more info. 
+Actually it only supports parsing of plain comments, also it needs some added "manual" anotation. You can see an output [Example](http://xperiments.github.io/TSDoc/docs/index.html).
+
+## Annotating your TS project
+
+See an example of annotated comments that works with TS
+[Example](Guide.md)
+ 
 
 ## Instalation ##
 

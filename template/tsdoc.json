@@ -6,7 +6,7 @@
 	"plugins":[
 		 "plugins/markdown"
 		,"plugins/commentsOnly"
-		,"$TSDOC$/plugins/implements"
+		,"$TSDOC$/plugins/TSDoc.js"
 	],
 	"opts":
 	{
