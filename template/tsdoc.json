@@ -15,10 +15,7 @@
 	},
 	"templates" : {
 		"cleverLinks"     : false,
-		"monospaceLinks"  : false,
-		"default"         :{
-			"outputSourceFiles" : true
-		}
+		"monospaceLinks"  : false
 	},
 	"source":
 	{
@@ -33,6 +30,8 @@
 		"destination"	:"$DESTINATION$",
 		"systemName"	: "$PROJECTNAME$",
 		"footer"		: "",
-		"copyright"		: "$PROJECTNAME$ Copyright © $YEAR$ $USERNAME$."
+		"copyright"		: "$PROJECTNAME$ Copyright © $YEAR$ $USERNAME$.",
+		"outputSourceFiles" : true
+
 	}
 }

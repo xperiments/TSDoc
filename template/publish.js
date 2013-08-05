@@ -251,6 +251,17 @@ function attachModuleSymbols( doclets, modules ) {
 	} );
 }
 
+
+/*xperiments*/
+var sort_by = function(field, reverse, primer){
+	var key = function (x) {return primer ? primer(x[field]) : x[field]};
+
+	return function (a,b) {
+		var A = key(a), B = key(b);
+		return ( (A < B) ? -1 : ((A > B) ? 1 : 0) ) * [-1,1][+!!reverse];
+	}
+}
+
 /**
  * Create the navigation sidebar.
  * @param {object} members The members that will be used to create the sidebar.
@@ -270,6 +281,7 @@ function buildNav( members ) {
 	var nav = navigationMaster;
 	if ( members.modules.length ) {
 
+		members.modules.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
 		members.modules.forEach( function ( m ) {
 			if ( !hasOwnProp.call( seen, m.longname ) ) {
 
@@ -281,6 +293,7 @@ function buildNav( members ) {
 
 	if ( members.externals.length ) {
 
+		members.externals.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
 		members.externals.forEach( function ( e ) {
 			if ( !hasOwnProp.call( seen, e.longname ) ) {
 
@@ -292,6 +305,7 @@ function buildNav( members ) {
 
 	if ( members.classes.length ) {
 
+		members.classes.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
 		members.classes.forEach( function ( c ) {
 			if ( !hasOwnProp.call( seen, c.longname ) ) {
 
@@ -319,6 +333,7 @@ function buildNav( members ) {
 	if ( members.namespaces.length ) {
 
 
+		members.namespaces.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
 		members.namespaces.forEach( function ( n ) {
 			
 			if ( !hasOwnProp.call( seen, n.longname ))
@@ -332,6 +347,7 @@ function buildNav( members ) {
 
 	if ( members.mixins.length ) {
 
+		members.mixins.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
 		members.mixins.forEach( function ( m ) {
 			if ( !hasOwnProp.call( seen, m.longname ) ) {
 
@@ -344,6 +360,7 @@ function buildNav( members ) {
 
 	if ( members.tutorials.length ) {
 
+		members.tutorials.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
 		members.tutorials.forEach( function ( t ) {
 
 			nav.tutorial.members.push( tutoriallink( t.longname ) );
@@ -352,6 +369,7 @@ function buildNav( members ) {
 	}
 
 	if ( members.globals.length ) {
+		members.globals.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
 		members.globals.forEach( function ( g ) {
 			if ( g.kind !== 'typedef' && !hasOwnProp.call( seen, g.longname ) ) {
 
@@ -535,7 +553,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 
 	// only output pretty-printed source files if requested; do this before generating any other
 	// pages, so the other pages can link to the source files
-	if ( conf['default'].outputSourceFiles ) {
+	if ( conf.outputSourceFiles ) {
 		generateSourceFiles( sourceFiles );
 	}
 
