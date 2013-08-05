@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>TSDOC Classes</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+	
+	<style>
+		.sideMenu
+		{
+			margin-left: 320px!important;
+
+		}
+		#main
+		{
+			margin-top: 40px;
+		}
+		#mainMenu
+		{
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			
+		}
+
+		#searchBox
+		{
+			vertical-align: none !important;
+			padding-right: 0px;
+			width:238px;
+
+		}
+		.sideMargin
+		{
+			margin-left: 15px;
+		}
+		.sunlight-code-container
+		{
+			border:none!important;
+		}
+
+		.navTitle
+		{
+			font-size:15px;
+			padding:0px;
+
+		}
+		.nav-list
+		{
+			width: 100%;
+		}
+		.handCursor
+		{
+			cursor: pointer;
+		}
+		.nav-pills > li > a {
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}
+
+		#projectTitle
+		{
+			position: fixed;
+			padding-left: 10px;
+			padding-top: 5px;
+			font-size: 26px;
+			font-weight: lighter;
+			letter-spacing: -1px;
+			background-color: #FFF;
+			width: 100%;
+			height: 35px;
+			line-height: 18px;
+			color: #000;
+			border-bottom: 1px solid rgba(0,0,0,.2);
+			z-index: 1;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			font-family: 'Helvetica Neue';
+			font-weight: lighter;
+		}
+		h3
+		{
+			font-size: 22px;
+			font-weight: lighter;
+		}
+		.page-title
+		{
+			font-weight: lighter;
+			font-size: 28px;
+			letter-spacing: -2px;
+		}
+
+		.well
+		{
+			padding: 5px;
+			width:280px;
+			margin-left:0px;
+		}
+
+
+		.menuFrame
+		{
+			margin-top: 20px;
+			overflow:hidden; 
+			overflow-y:auto;
+		}
+		.menuFrame::-webkit-scrollbar {
+		    -webkit-appearance: none;
+		}
+
+		.menuFrame::-webkit-scrollbar:vertical {
+		    width: 11px;
+		}
+
+		.menuFrame::-webkit-scrollbar:horizontal {
+		    height: 11px;
+		}
+
+		.menuFrame::-webkit-scrollbar-thumb {
+		    border-radius: 8px;
+		    border: 2px solid white; /* should match background, can't be transparent */
+		    background-color: rgba(0, 0, 0, .5);
+		}
+		
+		.container-fluid
+		{
+			padding-left: 10px;
+		}
+
+		#side-menu
+		{
+			height: 415px;
+			box-shadow: inset 0 0 10px rgba(0,0,0,.5);
+			border: 1px solid #999;
+		}
+
+		#menuAside
+		{
+			margin-top:50px;
+			position:fixed;
+		}
+
+		.member {
+			font-size: 16px;
+		}
+
+.twitter-typeahead
+{
+	top: -5px;
+}
+.twitter-typeahead .tt-query,
+.twitter-typeahead .tt-hint {
+  margin-bottom: 0;
+  background-color: #F00;
+  border-radius: 20px;
+
+}
+
+.tt-hint
+{
+	top: 2px!important;
+
+    padding-left: 10px!important;  
+    width: 188px;
+    text-indent: 4px;
+}
+.tt-dropdown-menu {
+  min-width: 160px;
+  margin-top: 2px;
+  padding: 5px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.2);
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+.tt-suggestion {
+  display: block;
+  padding: 3px 20px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+  color: #fff;
+  background-color: #0081c2;
+  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+  background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0)
+}
+
+.tt-suggestion.tt-is-under-cursor a {
+  color: #fff;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+	</style>
+</head>
+
+<body>
+<div id="projectTitle">
+	<div id="btnCollapse" class="btn collapseSidebarButton btn-primary"><i class="icon-th-list icon-white"></i></div>
+	TSDOC
+</div>	
+<div class="container-fluid">
+
+	<div id="menuAside">
+    <aside class="well span3 oc" id="side-menu" role="navigation">
+
+    	<div style="margin-left: 10px; margin-top: 10px;">
+			<input type="text" id="searchBox" class="search-query typeahead" placeholder="Search">
+		</div>
+		<div class="menuFrame" id="sideMenuFrame">
+		<ul class="nav nav-pills nav-stacked">
+			<li class="nav-header navTitle"><a href="index.html">INDEX</a></li>
+				<li class="divider"></li>
+				
+				
+				
+						<li class="nav-header navTitle">
+							<!--<a href="namespaces.list.html">Namespaces</a>-->
+
+							<a class="handCursor" data-toggle="collapse" data-target="#collapse_Namespaces">Namespaces<span class="badge badge-info pull-right">2</span></a>
+						</li>
+						<li><div id="collapse_Namespaces" class="collapse in">
+							<ul class="nav nav-list" style="width:100%">
+								
+								<li>
+									
+									<a href="pulsar.html">pulsar</a>
+								</li>
+								
+								<li>
+									
+									<a href="pulsar.events.html">pulsar.events</a>
+								</li>
+								
+								<li class="divider"></li>
+							</ul>
+							
+						</div></li>
+
+				
+				
+						<li class="nav-header navTitle">
+							<!--<a href="classes.list.html">Classes</a>-->
+
+							<a class="handCursor" data-toggle="collapse" data-target="#collapse_Classes">Classes<span class="badge badge-info pull-right">3</span></a>
+						</li>
+						<li><div id="collapse_Classes" class="collapse in">
+							<ul class="nav nav-list" style="width:100%">
+								
+								<li>
+									
+									<a href="pulsar.events.Event.html">pulsar.events.Event</a>
+								</li>
+								
+								<li>
+									
+									<a href="pulsar.events.EventDispatcher.html">pulsar.events.EventDispatcher</a>
+								</li>
+								
+								<li>
+									
+									<a href="pulsar.events.ExtendedEvent.html">pulsar.events.ExtendedEvent</a>
+								</li>
+								
+								<li class="divider"></li>
+							</ul>
+							
+						</div></li>
+
+				
+				
+						<li class="nav-header navTitle">
+							<!--<a href="classes.list.html">Interfaces</a>-->
+
+							<a class="handCursor" data-toggle="collapse" data-target="#collapse_Interfaces">Interfaces<span class="badge badge-info pull-right">2</span></a>
+						</li>
+						<li><div id="collapse_Interfaces" class="collapse in">
+							<ul class="nav nav-list" style="width:100%">
+								
+								<li>
+									
+									<a href="pulsar.events.IEvent.html">pulsar.events.IEvent</a>
+								</li>
+								
+								<li>
+									
+									<a href="pulsar.events.IListenerCallback.html">pulsar.events.IListenerCallback</a>
+								</li>
+								
+								<li class="divider"></li>
+							</ul>
+							
+						</div></li>
+
+				
+				
+
+		</ul>
+		</div>
+
+		<script>
+			var searchMembers = ["pulsar","pulsar.events","pulsar.events.Event","pulsar.events.EventDispatcher","pulsar.events.ExtendedEvent","pulsar.events.IEvent","pulsar.events.IListenerCallback"];
+		</script>
+    </aside>
+	</div>
+    <div id="docContents" class="sideMenu sideMargin">
+
+		
+			<div style="width:100%">
+		
+				<div id="main">
+					
+
+
+	<h1 class="page-title">
+        Classes:
+        
+        
+    </h1>
+<section>
+
+<header>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+
+        
+
+        
+    
+    </div>
+
+   
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="pulsar.events.Event.html">Event</a></dt>
+            <dd></dd>
+        
+            <dt><a href="pulsar.events.EventDispatcher.html">EventDispatcher</a></dt>
+            <dd></dd>
+        
+            <dt><a href="pulsar.events.ExtendedEvent.html">ExtendedEvent</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+
+    
+        <h3 class="subsection-title">Interfaces</h3>
+
+        <dl>
+            <dt><a href="pulsar.events.IEvent.html">IEvent</a></dt>
+            <dd></dd>
+        
+            <dt><a href="pulsar.events.IListenerCallback.html">IListenerCallback</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+        <!-- xperiments -->
+        <h3 class="subsection-title">Namespaces</h3>
+
+        <dl>
+                    <dt><a href="namespaces.html#pulsar"><a href="pulsar.html">pulsar</a></a></dt>
+                    <dd></dd>
+                
+                    <dt><a href="namespaces.html#pulsar.events"><a href="pulsar.events.html">events</a></a></dt>
+                    <dd></dd>
+                </dl>
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Events</h3>
+
+        <dl>
+            
+<dt>
+    <h4 class="name" id="event:events:ACTIVATE">events:ACTIVATE
+
+
+    </h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Event Description</p>
+    </div>
+    
+
+
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt style="font-weight:lighter;" class="btn"><i class="icon-eye-open"></i> <a href="Event.ts.html">Event.ts</a></dt>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+
+        </dl>
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+</article>
+
+</section>
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+						<span class="copyright">
+						TSDOC Copyright © $2013 pcasaubon.
+						</span>
+									<br />
+									
+						<span class="jsdoc-message">
+						Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0</a>
+						on Mon Aug 05 2013 11:39:12 GMT+0200 (CEST) using the <a href="https://github.com/xperiments/TSDoc">TSDoc template</a>.
+						</span>
+				</footer>
+			</div>
+			<!--
+			
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
+			
+			-->
+			<br clear="both">
+		</div>
+
+	</div>
+
+	<script src="scripts/sunlight.js"></script>
+	<script src="scripts/sunlight.javascript.js"></script>
+	<script src="scripts/sunlight-plugin.doclinks.js"></script>
+	<script src="scripts/sunlight-plugin.linenumbers.js"></script>
+	<script src="scripts/sunlight-plugin.menu.js"></script>
+	<script src="scripts/jquery.min.js"></script>
+	<script src="scripts/jquery.scrollTo.js"></script>
+	<script src="scripts/jquery.localScroll.js"></script>
+	<script src="scripts/bootstrap.min.js"></script>
+
+
+
+	<script>  Sunlight.highlightAll({lineNumbers:false,  showMenu: true, enableDoclinks :true}); </script>
+
+	<script>
+
+
+		function search( words )
+		{
+			var wordsArray = words.toLowerCase().split(' ');
+			var results = [];
+			for( var i=0;i<wordsArray.length;i++)
+			{
+				for( var e=0;e<searchMembers.length;e++)
+				{
+					if( searchMembers[e].toLowerCase().indexOf(wordsArray[i])!=-1 )
+					{
+						results.push( searchMembers[e] )
+					}
+				}
+			}
+			var lis = "";
+			for( var i=0;i<results.length;i++)
+			{
+				lis+='<li><a href="'+results[i]+'.html">'+results[i]+'</a></li>';
+			}
+			$('#searchResultsListing').html( lis );
+		}
+
+
+		$( function () {
+
+
+			$('.typeahead').typeahead({
+			  source: searchMembers,
+			  matcher: function(item) {
+			  	console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
+                // evaluate item variable and return true if the item was matched.
+                return item.toLowerCase().indexOf( this.query.toLowerCase() )==-1?false:true;
+             },
+			  updater: function (item) {
+
+					window.location.href = item+'.html';
+			  }
+
+			});
+
+
+
+			$(window).resize(function() {
+			  $('#side-menu').height( $(window).height()-70 );
+			  $('#sideMenuFrame').height( $(window).height()-140 );
+			});
+
+			$(window).trigger('resize')
+			$('#btnCollapse').click(function()
+			{
+				$('#side-menu').toggle();
+				$('#docContents').toggleClass('sideMenu');
+
+			})
+			$('#btnHome').click(function()
+			{
+				document.location.href="index.html"
+
+			})			
+
+		} );
+	</script>
+
+	
+	<script>
+		$( function () {
+			$('#main').localScroll({
+				offset: { top: 56 } //offset by the height of your header (give or take a few px, see what works for you)
+			});
+
+			$( "dt h4.name" ).each( function () {
+				var $this = $( this );
+				var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
+				var dt = $this.parents( "dt" );
+				var children = dt.next( "dd" );
+
+				$this.append( icon ).css( {cursor : "pointer"} );
+				$this.addClass( "member-collapsed" ).addClass( "member" );
+
+				children.hide();
+				$this.toggle( function () {
+					icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" ).removeClass( "icon-white" );
+					$this.addClass( "member-open" ).removeClass( "member-collapsed" );
+					children.slideDown();
+				}, function () {
+					icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" ).addClass( "icon-white" );
+					$this.addClass( "member-collapsed" ).removeClass( "member-open" );
+					children.slideUp();
+				} );
+			} );
+		} );
+	</script>
+	
+
+</body>
+</html>
