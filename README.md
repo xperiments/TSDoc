@@ -7,7 +7,7 @@ Actually it only supports parsing of plain comments, also it needs some added "m
 ## Annotating your TS project
 
 See an example of annotated comments that works with TS
-[Example](Guide.md)
+[Example](DocGuide.md)
  
 
 ## Instalation ##
