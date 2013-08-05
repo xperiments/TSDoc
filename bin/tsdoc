@@ -1,0 +1,3 @@
+#!/usr/local/bin/node
+var App = require('../src/App');
+App.cmd();

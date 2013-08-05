@@ -1,0 +1,30 @@
+{
+	"name": "tsdoc",
+	"preferGlobal": true,
+	"version": "0.0.1",
+	"author": "xperiments aka Pedro Casaubon",
+	"description": "NodeJS module for generate JSDoc Documentation from Typescript sources",
+	"main": "./src/App.js",
+	"bin": {
+		"tsdoc": "./bin/tsdoc"
+	},
+	"dependencies" :
+	{
+		"jsdoc":"3.2.0"
+		,"optimist":"0.6.0"
+	},
+	"analyze": true,
+	"license": "MIT",
+	"engines": {
+		"node": ">=0.8"
+	},
+	"directories": {
+		"bin": "./bin",
+		"src": "./src"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/xperiments/TSDoc.git"
+	}
+
+}

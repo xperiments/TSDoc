@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<?js var that = this; ?>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title><?js= this.navOptions.systemName ?> <?js= title ?></title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<?js if (this.navOptions.theme === "darkstrap"){ ?>
+	<link type="text/css" rel="stylesheet" href="styles/site.cyborg.css">
+	<link type="text/css" rel="stylesheet" href="styles/darkstrap.css">
+	<?js } else { ?>
+	<link type="text/css" rel="stylesheet" href="styles/site.<?js= this.navOptions.theme ?>.css">
+	<?js } ?>
+	<style>
+		.sideMenu
+		{
+			margin-left: 320px!important;
+
+		}
+		#main
+		{
+			margin-top: 40px;
+		}
+		#mainMenu
+		{
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			
+		}
+
+		#searchBox
+		{
+			vertical-align: none !important;
+			padding-right: 0px;
+			width:238px;
+
+		}
+		.sideMargin
+		{
+			margin-left: 15px;
+		}
+		.sunlight-code-container
+		{
+			border:none!important;
+		}
+
+		.navTitle
+		{
+			font-size:15px;
+			padding:0px;
+
+		}
+		.nav-list
+		{
+			width: 100%;
+		}
+		.handCursor
+		{
+			cursor: pointer;
+		}
+		.nav-pills > li > a {
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}
+
+		#projectTitle
+		{
+			position: fixed;
+			padding-left: 10px;
+			padding-top: 5px;
+			font-size: 26px;
+			font-weight: lighter;
+			letter-spacing: -1px;
+			background-color: #FFF;
+			width: 100%;
+			height: 35px;
+			line-height: 18px;
+			color: #000;
+			border-bottom: 1px solid rgba(0,0,0,.2);
+			z-index: 1;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			font-family: 'Helvetica Neue';
+			font-weight: lighter;
+		}
+		h3
+		{
+			font-size: 22px;
+			font-weight: lighter;
+		}
+		.page-title
+		{
+			font-weight: lighter;
+			font-size: 28px;
+			letter-spacing: -2px;
+		}
+
+		.well
+		{
+			padding: 5px;
+			width:280px;
+			margin-left:0px;
+		}
+
+
+		.menuFrame
+		{
+			margin-top: 20px;
+			overflow:hidden; 
+			overflow-y:auto;
+		}
+		.menuFrame::-webkit-scrollbar {
+		    -webkit-appearance: none;
+		}
+
+		.menuFrame::-webkit-scrollbar:vertical {
+		    width: 11px;
+		}
+
+		.menuFrame::-webkit-scrollbar:horizontal {
+		    height: 11px;
+		}
+
+		.menuFrame::-webkit-scrollbar-thumb {
+		    border-radius: 8px;
+		    border: 2px solid white; /* should match background, can't be transparent */
+		    background-color: rgba(0, 0, 0, .5);
+		}
+		
+		.container-fluid
+		{
+			padding-left: 10px;
+		}
+
+		#side-menu
+		{
+			height: 415px;
+			box-shadow: inset 0 0 10px rgba(0,0,0,.5);
+			border: 1px solid #999;
+		}
+
+		#menuAside
+		{
+			margin-top:50px;
+			position:fixed;
+		}
+
+		.member {
+			font-size: 16px;
+		}
+
+.twitter-typeahead
+{
+	top: -5px;
+}
+.twitter-typeahead .tt-query,
+.twitter-typeahead .tt-hint {
+  margin-bottom: 0;
+  background-color: #F00;
+  border-radius: 20px;
+
+}
+
+.tt-hint
+{
+	top: 2px!important;
+
+    padding-left: 10px!important;  
+    width: 188px;
+    text-indent: 4px;
+}
+.tt-dropdown-menu {
+  min-width: 160px;
+  margin-top: 2px;
+  padding: 5px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.2);
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+.tt-suggestion {
+  display: block;
+  padding: 3px 20px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+  color: #fff;
+  background-color: #0081c2;
+  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+  background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0)
+}
+
+.tt-suggestion.tt-is-under-cursor a {
+  color: #fff;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+	</style>
+</head>
+
+<body>
+<div id="projectTitle">
+	<div id="btnCollapse" class="btn collapseSidebarButton btn-primary"><i class="icon-th-list icon-white"></i></div>
+	<?js= this.navOptions.systemName ?>
+</div>	
+<div class="container-fluid">
+
+	<div id="menuAside">
+    <aside class="well span3 oc" id="side-menu" role="navigation">
+
+    	<div style="margin-left: 10px; margin-top: 10px;">
+			<input type="text" id="searchBox" class="search-query typeahead" placeholder="Search">
+		</div>
+		<div class="menuFrame" id="sideMenuFrame">
+		<ul class="nav nav-pills nav-stacked">
+			<li class="nav-header navTitle"><a href="index.html">INDEX</a></li>
+				<li class="divider"></li>
+				<?js this.searchMembers = []; ?>
+				<?js 
+
+					var findCls = -1;
+					for( var rr =0; rr< this.nav.topLevelNav.length; rr++ )
+					{
+						if( this.nav.topLevelNav[rr].title == "Classes")
+						{
+							findCls = this.nav.topLevelNav[rr];
+							break;	
+						}
+					}
+					var findInter = -1;
+					for( var rr =0; rr< this.nav.topLevelNav.length; rr++ )
+					{
+						if( this.nav.topLevelNav[rr].title == "Interfaces")
+						{
+							findInter = this.nav.topLevelNav[rr];
+							break;	
+						}
+					}
+
+
+					var interfaces = [];
+					var klasses = [];
+					
+
+					for( var tt =0; tt< findCls.members.length; tt++ )
+					{
+
+						if( findCls.members[tt].namespace.tags!=undefined )
+						{
+							var found = false;
+							for( var yy=0; yy<findCls.members[tt].namespace.tags.length; yy++)
+							{
+								if( findCls.members[tt].namespace.tags[yy].title=="interface")
+								{
+									interfaces.push( findCls.members[tt] );
+									found = true;	
+								}
+							}
+							if(!found) klasses.push( findCls.members[tt] );		
+						}
+						else
+						{
+							klasses.push( findCls.members[tt] );	
+						}							
+					}
+
+
+					findCls.members = klasses;
+					if( findInter==-1 )
+					{
+						this.nav.topLevelNav.push( { title: 'Interfaces', link: 'classes.list.html', members: interfaces} )
+					}
+					else
+					{
+						findInter.members = findInter.members.concat( interfaces );
+					}
+
+					 
+					//this.nav.topLevelNav.interface.members = interfaces; 
+
+				?>
+				<?js this.nav.topLevelNav.forEach(function(entry){
+
+					if( entry.members.length!=0)
+					{
+					?>
+						<li class="nav-header navTitle">
+							<!--<a href="<?js= entry.link ?>"><?js= entry.title ?></a>-->
+
+							<a class="handCursor" data-toggle="collapse" data-target="#collapse_<?js=entry.title?>"><?js= entry.title ?><span class="badge badge-info pull-right"><?js= entry.members.length ?></span></a>
+						</li>
+						<li><div id="collapse_<?js=entry.title?>" class="collapse in">
+							<ul class="nav nav-list" style="width:100%">
+								<?js entry.members.forEach(function(member){?>
+								<li>
+									<?js if ( typeof member !="string" ) that.searchMembers.push ( member.namespace.longname ); ?>
+									<?js= member.link ?>
+								</li>
+								<?js	}); ?>
+								<li class="divider"></li>
+							</ul>
+							
+						</div></li>
+
+				
+				<?js }}); ?>
+
+		</ul>
+		</div>
+
+		<script>
+			var searchMembers = <?js= JSON.stringify( this.searchMembers) ?>;
+		</script>
+    </aside>
+	</div>
+    <div id="docContents" class="sideMenu sideMargin">
+
+		<?js if(docs && docs[0].kind !== "source"){ ?>
+			<div style="width:100%">
+		<?js }else{ ?>
+			<div class="span12-" style="width:95%">
+		<?js } ?>
+				<div id="main">
+					<?js= content ?>
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					<?js if (that.navOptions.footer.length > 0){ ?>
+					<?js= that.navOptions.footer ?>
+					<br />
+					<?js } ?>
+					<?js if (that.navOptions.copyright.length > 0){ ?>
+						<span class="copyright">
+						<?js= that.navOptions.copyright ?>
+						</span>
+									<br />
+									<?js } ?>
+						<span class="jsdoc-message">
+						Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc <?js= env.version.number ?></a>
+						on <?js= (new Date()) ?> using the <a href="https://github.com/xperiments/TSDoc">TSDoc template</a>.
+						</span>
+				</footer>
+			</div>
+			<!--
+			<?js if(docs && docs[0].kind !== "source"){ ?>
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
+			<?js } ?>
+			-->
+			<br clear="both">
+		</div>
+
+	</div>
+
+	<script src="scripts/sunlight.js"></script>
+	<script src="scripts/sunlight.javascript.js"></script>
+	<script src="scripts/sunlight-plugin.doclinks.js"></script>
+	<script src="scripts/sunlight-plugin.linenumbers.js"></script>
+	<script src="scripts/sunlight-plugin.menu.js"></script>
+	<script src="scripts/jquery.min.js"></script>
+	<script src="scripts/jquery.scrollTo.js"></script>
+	<script src="scripts/jquery.localScroll.js"></script>
+	<script src="scripts/bootstrap.min.js"></script>
+
+
+
+	<script>  Sunlight.highlightAll({lineNumbers:<?js= this.navOptions.linenums ?>,  showMenu: true, enableDoclinks :true}); </script>
+
+	<script>
+
+
+		function search( words )
+		{
+			var wordsArray = words.toLowerCase().split(' ');
+			var results = [];
+			for( var i=0;i<wordsArray.length;i++)
+			{
+				for( var e=0;e<searchMembers.length;e++)
+				{
+					if( searchMembers[e].toLowerCase().indexOf(wordsArray[i])!=-1 )
+					{
+						results.push( searchMembers[e] )
+					}
+				}
+			}
+			var lis = "";
+			for( var i=0;i<results.length;i++)
+			{
+				lis+='<li><a href="'+results[i]+'.html">'+results[i]+'</a></li>';
+			}
+			$('#searchResultsListing').html( lis );
+		}
+
+
+		$( function () {
+
+
+			$('.typeahead').typeahead({
+			  source: searchMembers,
+			  matcher: function(item) {
+			  	console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
+                // evaluate item variable and return true if the item was matched.
+                return item.toLowerCase().indexOf( this.query.toLowerCase() )==-1?false:true;
+             },
+			  updater: function (item) {
+
+					window.location.href = item+'.html';
+			  }
+
+			});
+
+
+
+			$(window).resize(function() {
+			  $('#side-menu').height( $(window).height()-70 );
+			  $('#sideMenuFrame').height( $(window).height()-140 );
+			});
+
+			$(window).trigger('resize')
+			$('#btnCollapse').click(function()
+			{
+				$('#side-menu').toggle();
+				$('#docContents').toggleClass('sideMenu');
+
+			})
+			$('#btnHome').click(function()
+			{
+				document.location.href="index.html"
+
+			})			
+
+		} );
+	</script>
+
+	<?js if (this.navOptions.collapseSymbols) { ?>
+	<script>
+		$( function () {
+			$('#main').localScroll({
+				offset: { top: 56 } //offset by the height of your header (give or take a few px, see what works for you)
+			});
+
+			$( "dt h4.name" ).each( function () {
+				var $this = $( this );
+				var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
+				var dt = $this.parents( "dt" );
+				var children = dt.next( "dd" );
+
+				$this.append( icon ).css( {cursor : "pointer"} );
+				$this.addClass( "member-collapsed" ).addClass( "member" );
+
+				children.hide();
+				$this.toggle( function () {
+					icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" ).removeClass( "icon-white" );
+					$this.addClass( "member-open" ).removeClass( "member-collapsed" );
+					children.slideDown();
+				}, function () {
+					icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" ).addClass( "icon-white" );
+					$this.addClass( "member-collapsed" ).removeClass( "member-open" );
+					children.slideUp();
+				} );
+			} );
+		} );
+	</script>
+	<?js } ?>
+
+</body>
+</html>

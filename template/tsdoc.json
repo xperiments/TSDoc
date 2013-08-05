@@ -1,0 +1,38 @@
+{
+	"tags":
+	{
+		"allowUnknownTags" : true
+	},
+	"plugins":[
+		 "plugins/markdown"
+		,"plugins/commentsOnly"
+		,"$TSDOC$/plugins/implements"
+	],
+	"opts":
+	{
+		"template"	:"$TSDOC$",
+		"recurse"	:"true"
+	},
+	"templates" : {
+		"cleverLinks"     : false,
+		"monospaceLinks"  : false,
+		"default"         :{
+			"outputSourceFiles" : true
+		}
+	},
+	"source":
+	{
+		"includePattern": "(\\.d)?\\.ts$"
+	},
+	"markdown"  : {
+		"parser"   : "gfm",
+		"hardwrap" : true
+	},
+	"tsdoc":{
+		"source"		:"$SOURCE$",
+		"destination"	:"$DESTINATION$",
+		"systemName"	: "$PROJECTNAME$",
+		"footer"		: "",
+		"copyright"		: "$PROJECTNAME$ Copyright © $YEAR$ $USERNAME$."
+	}
+}
