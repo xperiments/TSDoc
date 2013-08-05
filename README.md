@@ -4,11 +4,12 @@ A [JSDoc3](http://usejsdoc.org/) base themed generator generator for use with Ty
 
 Actually it only supports parsing of plain comments, also it needs some added "manual" anotation. You can see an output [Example](http://xperiments.github.io/TSDoc/docs/index.html).
 
+![image](http://xperiments.github.io/TSDoc/TSDocScreen.png)
+
 ## Annotating your TS project
 
 See an example of annotated comments that works with TS
 [Example](DocGuide.md)
- 
 
 ## Instalation ##
 
