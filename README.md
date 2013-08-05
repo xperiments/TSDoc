@@ -14,6 +14,24 @@ Actually it only supports parsing of plain comments, also it needs some added "m
 
 TSDoc uses the same [conf.json](http://usejsdoc.org/about-configuring-jsdoc.html) (now tsdoc.json) config file used in JsDoc3, but adds the following new options:
 
+	"tsdoc":{
+		"source"			:"{string}",
+		"destination"		:"{string}",
+		"systemName"		:"{string}",
+		"footer"			:"{string}",
+		"copyright"			:"{string}",
+		"outputSourceFiles" :{boolean}
+	}
+
+
+####Options####
+
+* __source__ Source folder where search .ts files
+* __destination__ Documentation output folder
+* __systemName__ The project name
+* __footer__ Footer string added to each page
+* __copyright__ Copyright string added to each page
+* __outputSourceFiles__ Set to true to enable source files processing 
 
 ### Adding a default tsdoc.json file
 
