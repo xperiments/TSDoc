@@ -5,6 +5,7 @@ export class TSDdoc
 	public static nodePackage = require( './../package.json' );
 	public static trace(error, stdout, stderr):void
 	{
+        console.log(stdout);
 		if (error !== null)
 		{
 			console.log('exec error: ' + error);

@@ -3,6 +3,7 @@ var TSDdoc = (function () {
     function TSDdoc() {
     }
     TSDdoc.trace = function (error, stdout, stderr) {
+        console.log(stdout);
         if (error !== null) {
             console.log('exec error: ' + error);
         }
