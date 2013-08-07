@@ -155,6 +155,17 @@
 			font-size: 16px;
 		}
 
+		.genericAnnotation
+		{
+		    color:#2fa4e7;
+		}
+
+        .member-open .genericAnnotation {
+            color: #FFF;
+        }
+
+
+
 .twitter-typeahead
 {
 	top: -5px;
@@ -265,10 +276,15 @@
 
 					var interfaces = [];
 					var klasses = [];
+					var klassesGroups = [];
+					var InterfaceGroups = [];
+
 					
 
 					for( var tt =0; tt< findCls.members.length; tt++ )
 					{
+
+                        var classGroup= findCls.members[tt].namespace.longname.split( "."+findCls.members[tt].namespace.name )[0];
 
 						if( findCls.members[tt].namespace.tags!=undefined )
 						{
@@ -278,34 +294,82 @@
 								if( findCls.members[tt].namespace.tags[yy].title=="interface")
 								{
 									interfaces.push( findCls.members[tt] );
-									found = true;	
+									found = true;
+									InterfaceGroups[ classGroup ] = InterfaceGroups[ classGroup ] || [];
+									InterfaceGroups[ classGroup ].push( findCls.members[tt] );
 								}
 							}
-							if(!found) klasses.push( findCls.members[tt] );		
+							if(!found)
+							{
+							    klasses.push( findCls.members[tt] );
+							    klassesGroups[ classGroup ] = klassesGroups[ classGroup ] || [];
+							    klassesGroups[ classGroup ].push( findCls.members[tt] );
+							}
 						}
 						else
 						{
-							klasses.push( findCls.members[tt] );	
+							klasses.push( findCls.members[tt] );
+							klassesGroups[ classGroup ] = klassesGroups[ classGroup ] || [];
+							klassesGroups[ classGroup ].push( findCls.members[tt] );
 						}							
 					}
 
 
-					findCls.members = klasses;
+					findCls.members = klassesGroups;
 					if( findInter==-1 )
 					{
-						this.nav.topLevelNav.push( { title: 'Interfaces', link: 'classes.list.html', members: interfaces} )
+						this.nav.topLevelNav.push( { title: 'Interfaces', link: 'classes.list.html', members: InterfaceGroups} )
 					}
 					else
 					{
-						findInter.members = findInter.members.concat( interfaces );
+						findInter.members = findInter.members.concat( InterfaceGroups );
 					}
+
+
+
 
 					 
 					//this.nav.topLevelNav.interface.members = interfaces; 
 
 				?>
-				<?js this.nav.topLevelNav.forEach(function(entry){
+				<?js
 
+
+
+
+				    this.nav.topLevelNav.forEach(function(entry){
+
+                    console.log( entry.title );
+                    if( entry.title=="Classes" || entry.title=="Interfaces")
+                    {
+
+
+					?>
+						<li class="nav-header navTitle">
+							<!--<a href="<?js= entry.link ?>"><?js= entry.title ?></a>-->
+
+							<a class="handCursor" data-toggle="collapse" data-target="#collapse_<?js=entry.title?>"><?js= entry.title ?></a>
+						</li>
+						<li><div id="collapse_<?js=entry.title?>" class="collapse in">
+							<ul class="nav nav-list" style="width:100%">
+							    <?js for( var mm in entry.members ){ ?>
+							    <?js console.log(entry.members[mm]);entry.members[mm].forEach(function(member4){ ?>
+                                <li> <?js= member4.namespace.name ?></li>
+                                <?js }); }?>
+								<li class="divider"></li>
+							</ul>
+
+						</div></li>
+
+
+                    <?js
+
+
+
+
+                    }
+                    else
+                    {
 					if( entry.members.length!=0)
 					{
 					?>
@@ -316,10 +380,12 @@
 						</li>
 						<li><div id="collapse_<?js=entry.title?>" class="collapse in">
 							<ul class="nav nav-list" style="width:100%">
-								<?js entry.members.forEach(function(member){?>
+								<?js entry.members.forEach(function(member){
+
+								?>
 								<li>
 									<?js if ( typeof member !="string" ) that.searchMembers.push ( member.namespace.longname ); ?>
-									<?js= member.link ?>
+									<?js= member.namespace.longname ?>
 								</li>
 								<?js	}); ?>
 								<li class="divider"></li>
@@ -328,7 +394,7 @@
 						</div></li>
 
 				
-				<?js }}); ?>
+				<?js }}}); ?>
 
 		</ul>
 		</div>
@@ -425,7 +491,7 @@
 			$('.typeahead').typeahead({
 			  source: searchMembers,
 			  matcher: function(item) {
-			  	console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
+			  	//console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
                 // evaluate item variable and return true if the item was matched.
                 return item.toLowerCase().indexOf( this.query.toLowerCase() )==-1?false:true;
              },
