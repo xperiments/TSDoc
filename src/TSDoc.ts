@@ -21,10 +21,8 @@ class TSDdoc
 		}
 	}
 
-
 	public static cmd():void
 	{
-
 		var argv = require('optimist');
 		var fs = require('fs');
 

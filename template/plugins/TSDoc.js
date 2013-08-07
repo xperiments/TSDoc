@@ -13,6 +13,12 @@ function HTMLEncode(str){
 	return aRet.join('');
 }
 
+var path = require( 'path' );
+var fs = require( 'fs' );
+var configFile = process.cwd()+path.sep+'tsdoc.json';
+var configContents = fs.readFileSync( configFile,'utf8');
+var config = JSON.parse( configContents );
+
 
 exports.defineTags = function(dictionary) {
 	dictionary.defineTag('implements', {
@@ -25,7 +31,7 @@ exports.defineTags = function(dictionary) {
 	});
 	dictionary.defineTag('generic', {
 		onTagged: function(doclet, tag) {
-			doclet.genericAnnotation = HTMLEncode( tag.text ) ||"MIERDA";
+			doclet.genericAnnotation = HTMLEncode( tag.text ) ||"";
 		}
 	});
 
@@ -44,10 +50,13 @@ exports.handlers = {
 	beforeParse: function(e) {
 
 
-		// Remove All but conserve Comments
-		var comments = e.source.match(/\/\*\*[\s\S]+?\*\//g);
-		if (comments) {
-			e.source = comments.join('\n\n');
+		if( config.tsdoc.commentsOnly )
+		{
+			// Remove All but conserve Comments
+			var comments = e.source.match(/\/\*\*[\s\S]+?\*\//g);
+			if (comments) {
+				e.source = comments.join('\n\n');
+			}
 		}
 
 		// Search for class declarations and check for generics descriptors

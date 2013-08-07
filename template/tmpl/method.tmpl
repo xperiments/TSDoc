@@ -45,15 +45,41 @@ if( data.params )
     {
         var paramName = data.params[i].name;
         var paramSignature = data.params[i].type ? data.params[i].type.names[0]:'any';
-        xparams.push( HTMLEncode( [ paramName, paramSignature].join(':') ) )
+        paramSignature = ': <span class="paramSignature">' + HTMLEncode( paramSignature ) + '</span>';
+        
+        xparams.push( paramName + paramSignature );
     }
 
 }
+var accessType = '';
+if(kind === 'function'){
+    var buttonClass;
+    switch(data.access){
+        case 'private':
+            buttonClass = 'btn-danger';
+        break;
+        case 'static':
+            buttonClass = 'btn-warning';
+        break;
+        case 'override':
+            buttonClass = 'btn-info';
+        break;
+        default:
+            buttonClass = 'btn-success';
+        break;
+    }
+    accessType = '<span class="btn btn-mini ' + buttonClass + '" title="' + (data.access ? data.access : 'public') + '">M</span> ';
+}
+if(kind === 'event' && name.indexOf(':') != -1){
+    name = name.split(':')[1];
+}
 
-var xreturn =" &rarr; {void}";
+var xreturn = "";
 if( data.returns )
 {
-    xreturn = data.returns[0].type ? " &rarr; {"+HTMLEncode( data.returns[0].type.names[0] )+"}":""
+    xreturn = data.returns[0].type ? " &rarr; {"+data.returns[0].type.names[0]+"}":""
+} else if(kind === 'class') {
+    xreturn =" &rarr; {void}";
 }
 
 var gen="";
@@ -63,7 +89,7 @@ if( data.genericAnnotation )
 }
 ?>
 <dt>
-    <h4 class="name" id="<?js= id ?>"><?js= data.attribs + (kind === 'class' ? 'new ' : '') + name + gen+(kind !== 'event' ? ( '('+xparams.join(', ') +')'+xreturn ) : '') ?>
+    <h4 class="name" id="<?js= id ?>"><?js= accessType + (kind === 'class' ? 'new ' : '') + name + gen+(kind !== 'event' ? ( '( '+xparams.join(', ') +' )'+xreturn ) : '') ?>
 
 
     </h4>
