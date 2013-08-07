@@ -1,8 +1,16 @@
+///<reference path="../dec/Node.d.ts"/>
 var path = require('path');
 var TSDdoc = (function () {
     function TSDdoc() {
     }
-    TSDdoc.trace = function (error, stdout, stderr) {
+    TSDdoc.trace = /**
+    * @member i
+    * @param error
+    * @param stdout
+    * @param stderr
+    */
+    function (error, stdout, stderr) {
+        console.log(stdout);
         if (error !== null) {
             console.log('exec error: ' + error);
         }
@@ -15,6 +23,7 @@ var TSDdoc = (function () {
         var sys = require('sys');
         var exec = require('child_process').exec;
         var configFile = process.cwd() + path.sep + 'tsdoc.json';
+        var readmeFile = process.cwd() + path.sep + 'readme.md';
         var configContents = fs.readFileSync(path.resolve(__dirname, '..' + path.sep + 'template' + path.sep + 'tsdoc.json'), 'utf8');
 
         argv = argv.usage('TypescriptPreprocessor v' + TSDdoc.nodePackage.version + '\nUsage: $0 --root projectRootDir -source inputFile').options('s', {
@@ -52,7 +61,8 @@ var TSDdoc = (function () {
                 var configJson = require(configFile);
                 var source = argv.s ? argv.s : configJson.tsdoc.source;
                 var destination = argv.d ? argv.d : configJson.tsdoc.destination;
-                exec("jsdoc " + configJson.tsdoc.source + " -c " + configFile + " -d " + configJson.tsdoc.destination, TSDdoc.trace);
+                var readme = TSDdoc.getReadmeFile();
+                exec("jsdoc " + configJson.tsdoc.source + " -c " + configFile + " -d " + configJson.tsdoc.destination + readme, TSDdoc.trace);
             } else {
                 console.log('No tsdoc.json found, please use -i to generate one');
             }
@@ -62,9 +72,21 @@ var TSDdoc = (function () {
         var userName = (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE);
         return userName.substr(userName.lastIndexOf(path.sep) + 1);
     };
+
+    TSDdoc.getReadmeFile = function () {
+        var fs = require('fs');
+        var files = fs.readdirSync(process.cwd());
+        var readme = "";
+        for (var i = 0; i < files.length; i++) {
+            if (files[i].toLowerCase().indexOf('readme.md') != -1) {
+                readme = ' ' + files[i];
+            }
+        }
+        console.log(readme);
+        return readme;
+    };
     TSDdoc.nodePackage = require('./../package.json');
     return TSDdoc;
 })();
-exports.TSDdoc = TSDdoc;
-
-//@ sourceMappingURL=TSDoc.js.map
+(module).exports = TSDdoc;
+//# sourceMappingURL=TSDoc.js.map

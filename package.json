@@ -1,7 +1,7 @@
 {
 	"name": "tsdoc",
 	"preferGlobal": true,
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"author": "xperiments aka Pedro Casaubon",
 	"description": "NodeJS module for generate JSDoc Documentation from Typescript sources",
 	"main": "./src/App.js",

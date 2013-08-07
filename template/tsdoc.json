@@ -5,7 +5,6 @@
 	},
 	"plugins":[
 		 "plugins/markdown"
-		,"plugins/commentsOnly"
 		,"$TSDOC$/plugins/TSDoc.js"
 	],
 	"opts":
@@ -31,6 +30,7 @@
 		"systemName"	: "$PROJECTNAME$",
 		"footer"		: "",
 		"copyright"		: "$PROJECTNAME$ Copyright © $YEAR$ $USERNAME$.",
-		"outputSourceFiles" : true
+		"outputSourceFiles" : true,
+		"commentsOnly": true
 	}
 }

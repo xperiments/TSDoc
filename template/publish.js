@@ -646,7 +646,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 					}
 				}
 				else
-				{	
+				{
 					generate( 'class', 'Class: ' + myClasses[0].name, myClasses, helper.longnameToUrl[longname] );
 				}
 			}

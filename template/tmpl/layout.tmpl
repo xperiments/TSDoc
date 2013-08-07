@@ -154,6 +154,28 @@
 		.member {
 			font-size: 16px;
 		}
+		.member-open .paramSignature{
+			font-size: 16px;
+			color: #2fa4e7;
+		}
+		.member-collapsed .paramSignature{
+			font-size: 16px;
+			color: #2fa4e7;
+		}
+		.routeTitle{
+		    cursor: pointer;
+		}
+
+		.genericAnnotation
+		{
+		    color:#2fa4e7;
+		}
+
+        .member-open .genericAnnotation {
+            color: #FFF;
+        }
+
+
 
 .twitter-typeahead
 {
@@ -307,28 +329,79 @@
 				<?js this.nav.topLevelNav.forEach(function(entry){
 
 					if( entry.members.length!=0)
-					{
-					?>
-						<li class="nav-header navTitle">
-							<!--<a href="<?js= entry.link ?>"><?js= entry.title ?></a>-->
+					{?>
+					    <li class="nav-header navTitle">
+                            <a class="handCursor" data-toggle="collapse" data-target="#collapse_<?js=entry.title?>"><?js= entry.title ?><span class="badge badge-info pull-right"><?js= entry.members.length ?></span></a>
+                        </li>
+                        <li>
+                            <div id="collapse_<?js=entry.title?>" class="collapse in">
+                                <ul class="nav nav-list" style="width:100%">
+                                    <?js if(entry.title === "Classes" || entry.title === "Interfaces"){
 
-							<a class="handCursor" data-toggle="collapse" data-target="#collapse_<?js=entry.title?>"><?js= entry.title ?><span class="badge badge-info pull-right"><?js= entry.members.length ?></span></a>
-						</li>
-						<li><div id="collapse_<?js=entry.title?>" class="collapse in">
-							<ul class="nav nav-list" style="width:100%">
-								<?js entry.members.forEach(function(member){?>
-								<li>
-									<?js if ( typeof member !="string" ) that.searchMembers.push ( member.namespace.longname ); ?>
-									<?js= member.link ?>
-								</li>
-								<?js	}); ?>
-								<li class="divider"></li>
-							</ul>
-							
-						</div></li>
+                                        // Special class process
+                                        var constructRoutesObject = function(routesArray){
+                                            var tree = {};
+                                            for(var i in routesArray){
+                                                var thisRoute = routesArray[i].split('.');
+                                                var innerScope = tree;
+                                                for(var el in thisRoute){
+                                                    if(!innerScope[thisRoute[el]]){
+                                                        var equals = {};
+                                                        if(el == thisRoute.length - 1){
+                                                            equals = routesArray[i];
+                                                        }
+                                                        innerScope[thisRoute[el]] = equals;
+                                                    }
+                                                    innerScope = innerScope[thisRoute[el]];
+                                                }
+                                            }
+                                            return tree;
+                                        };
+                                        var formRoutesTree = function(routesObject){
+                                            var result = '';
+                                            for(var b in routesObject){
+                                                result += '<li>';
+                                                if(typeof routesObject[b] == 'string'){
+                                                    result += '<a href="' + routesObject[b] + '.html">' + b + '</a>';
+                                                } else {
+                                                    result += '<div class="routeTitle">' + b + '</div><ul class="children nav nav-list">';
+                                                    result += formRoutesTree(routesObject[b]);
+                                                    result += '</ul>';
+                                                }
+                                                result += '</li>';
+                                            }
+                                            return result;
+                                        };
+                                        var classesArray = [];
+                                        entry.members.forEach(function(member){
+                                            if ( typeof member !="string" )
+                                            {
+                                             that.searchMembers.push ( member.namespace.longname );
+                                             classesArray.push( member.namespace.longname );
+                                            }
+                                        });
+                                        var classTree = constructRoutesObject(classesArray);
+                                        var htmlClassStructure = formRoutesTree(classTree);
+                                        ?><?js= htmlClassStructure ?>
+                            <?js
+                        } else {
 
-				
-				<?js }}); ?>
+                            // Regular process
+
+                            ?>
+                                        <?js entry.members.forEach(function(member){?>
+                                        <li>
+                                            <?js if ( typeof member !="string" ) that.searchMembers.push ( member.namespace.longname ); ?>
+                                            <?js= member.link ?>
+                                        </li>
+                                        <?js	}); ?>
+                                        <li class="divider"></li>
+                        <?js } ?>
+                                    </ul>
+                                </div>
+                            </li>
+                        <?js }
+				    }); ?>
 
 		</ul>
 		</div>
@@ -425,7 +498,7 @@
 			$('.typeahead').typeahead({
 			  source: searchMembers,
 			  matcher: function(item) {
-			  	console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
+			  	//console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
                 // evaluate item variable and return true if the item was matched.
                 return item.toLowerCase().indexOf( this.query.toLowerCase() )==-1?false:true;
              },
@@ -465,7 +538,9 @@
 			$('#main').localScroll({
 				offset: { top: 56 } //offset by the height of your header (give or take a few px, see what works for you)
 			});
-
+			$(".routeTitle").on('click', function(){
+			    $(this).next().slideToggle();
+			});
 			$( "dt h4.name" ).each( function () {
 				var $this = $( this );
 				var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
