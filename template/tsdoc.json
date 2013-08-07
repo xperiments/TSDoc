@@ -5,7 +5,7 @@
 	},
 	"plugins":[
 		 "plugins/markdown"
-		,"plugins/commentsOnly"
+		,"plugins/commentsOnly" // Comment if no TypeScript will be used
 		,"$TSDOC$/plugins/TSDoc.js"
 	],
 	"opts":
@@ -19,7 +19,7 @@
 	},
 	"source":
 	{
-		"includePattern": "(\\.d)?\\.ts$"
+		"includePattern": "(\\.d)?\\.ts$" // For only .js --->   ".+\\.js(doc)?$"
 	},
 	"markdown"  : {
 		"parser"   : "gfm",

@@ -36,7 +36,22 @@ if( data.params )
 }
 var accessType = '';
 if(kind === 'function'){
-    accessType = '<span class="accessType ' + (data.access ? data.access : 'public') + '">' + (data.access ? data.access : 'public') + '</span> ';
+    var buttonClass;
+    switch(data.access){
+        case 'private':
+            buttonClass = 'btn-danger';
+        break;
+        case 'static':
+            buttonClass = 'btn-warning';
+        break;
+        case 'override':
+            buttonClass = 'btn-info';
+        break;
+        default:
+            buttonClass = 'btn-success';
+        break;
+    }
+    accessType = '<span class="btn btn-mini ' + buttonClass + '" title="' + (data.access ? data.access : 'public') + '">M</span> ';
 }
 if(kind === 'event' && name.indexOf(':') != -1){
     name = name.split(':')[1];
