@@ -29,19 +29,29 @@ if( data.params )
     {
         var paramName = data.params[i].name;
         var paramSignature = data.params[i].type ? data.params[i].type.names[0]:'any';
-        xparams.push( [ paramName, paramSignature].join(':') ) 
+        paramSignature = '<span class="paramSignature"> : ' + paramSignature + '</span>';
+        xparams.push( [ paramName, paramSignature].join('') )
     }
 
 }
+var accessType = '';
+if(kind === 'function'){
+    accessType = '<span class="accessType ' + (data.access ? data.access : 'public') + '">' + (data.access ? data.access : 'public') + '</span> ';
+}
+if(kind === 'event' && name.indexOf(':') != -1){
+    name = name.split(':')[1];
+}
 
-var xreturn =" &rarr; {void}";
+var xreturn = "";
 if( data.returns )
 {
     xreturn = data.returns[0].type ? " &rarr; {"+data.returns[0].type.names[0]+"}":""
+} else if(kind === 'class') {
+    xreturn =" &rarr; {void}";
 }
 ?>
 <dt>
-    <h4 class="name" id="<?js= id ?>"><?js= data.attribs + (kind === 'class' ? 'new ' : '') + name + (kind !== 'event' ? ( '('+xparams.join(', ') +')'+xreturn ) : '') ?>
+    <h4 class="name" id="<?js= id ?>"><?js= accessType + (kind === 'class' ? 'new ' : '') + name + (kind !== 'event' ? ( '('+xparams.join(', ') +')'+ xreturn ) : '') ?>
 
 
     </h4>
