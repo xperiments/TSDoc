@@ -53,7 +53,7 @@ var TSDdoc = (function () {
                 var configJson = require(configFile);
                 var source = argv.s ? argv.s : configJson.tsdoc.source;
                 var destination = argv.d ? argv.d : configJson.tsdoc.destination;
-                exec("jsdoc " + configJson.tsdoc.source + " -c " + configFile + " -d " + configJson.tsdoc.destination, TSDdoc.trace);
+                exec("jsdoc " + configJson.tsdoc.source + " -c " + configFile + " -d " + configJson.tsdoc.destination + " -p", TSDdoc.trace);
             } else {
                 console.log('No tsdoc.json found, please use -i to generate one');
             }

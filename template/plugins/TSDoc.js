@@ -11,3 +11,9 @@ exports.defineTags = function(dictionary) {
 
 	dictionary.lookUp('augments').synonym('extends');
 }
+
+exports.handlers = {
+    newDoclet: function(e) {
+        //console.log(e);
+    }
+}

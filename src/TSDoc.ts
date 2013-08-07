@@ -67,7 +67,7 @@ export class TSDdoc
 				var configJson:any = require( configFile );
 				var source:string = argv.s ? argv.s : configJson.tsdoc.source;
 				var destination:string = argv.d ? argv.d : configJson.tsdoc.destination;
-				exec("jsdoc "+configJson.tsdoc.source+" -c "+configFile+" -d "+configJson.tsdoc.destination, TSDdoc.trace );
+				exec("jsdoc "+configJson.tsdoc.source+" -c "+configFile+" -d "+configJson.tsdoc.destination+" -p", TSDdoc.trace );
 			}
 			else
 			{
