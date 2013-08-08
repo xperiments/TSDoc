@@ -5,13 +5,17 @@
 	},
 	"plugins":[
 		 "plugins/markdown"
+<<<<<<< HEAD
 		,"plugins/commentsOnly" // Comment if no TypeScript will be used
+=======
+>>>>>>> development
 		,"$TSDOC$/plugins/TSDoc.js"
 	],
 	"opts":
 	{
 		"template"	:"$TSDOC$",
-		"recurse"	:"true"
+		"recurse"	:"true",
+		"private"	:"false"
 	},
 	"templates" : {
 		"cleverLinks"     : false,
@@ -28,9 +32,11 @@
 	"tsdoc":{
 		"source"		:"$SOURCE$",
 		"destination"	:"$DESTINATION$",
+		"tutorials"		:"",
 		"systemName"	: "$PROJECTNAME$",
 		"footer"		: "",
 		"copyright"		: "$PROJECTNAME$ Copyright © $YEAR$ $USERNAME$.",
-		"outputSourceFiles" : true
+		"outputSourceFiles" : true,
+		"commentsOnly": true
 	}
 }

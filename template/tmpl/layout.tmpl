@@ -3,6 +3,9 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
 	<title><?js= this.navOptions.systemName ?> <?js= title ?></title>
 
 	<!--[if lt IE 9]>
@@ -24,7 +27,7 @@
 		}
 		#main
 		{
-			margin-top: 40px;
+			margin-top: 46px;
 		}
 		#mainMenu
 		{
@@ -83,7 +86,7 @@
 			line-height: 18px;
 			color: #000;
 			border-bottom: 1px solid rgba(0,0,0,.2);
-			z-index: 1;
+			z-index: 10;
 		}
 		h1, h2, h3, h4, h5, h6 {
 			font-family: 'Helvetica Neue';
@@ -99,6 +102,7 @@
 			font-weight: lighter;
 			font-size: 28px;
 			letter-spacing: -2px;
+			padding-top:0px;
 		}
 
 		.well
@@ -152,8 +156,20 @@
 		}
 
 		.member {
-			font-size: 16px;
+			font-size: 14px;
+			color:#000;
+			background-color:#FFF;
+			border:1px solid #2fa4e7;
 		}
+		.member:hover {
+
+			background-color:#F6F6F6;
+		}		
+		.member-open .paramSignature{
+			font-size: 14px;
+			color: #2fa4e7;
+		}
+<<<<<<< HEAD
 		.member-open .paramSignature{
 			font-size: 12px;
 			color: #333;
@@ -161,10 +177,27 @@
 		.member-collapsed .paramSignature{
 			font-size: 12px;
 			color: #CCC;
+=======
+		.member-collapsed .paramSignature{
+			font-size: 14px;
+			color: #2fa4e7;
+>>>>>>> development
 		}
 		.routeTitle{
 		    cursor: pointer;
 		}
+<<<<<<< HEAD
+=======
+
+		.genericAnnotation
+		{
+		    color:#2fa4e7;
+		}
+
+
+
+
+>>>>>>> development
 
 .twitter-typeahead
 {
@@ -248,7 +281,7 @@
 			<input type="text" id="searchBox" class="search-query typeahead" placeholder="Search">
 		</div>
 		<div class="menuFrame" id="sideMenuFrame">
-		<ul class="nav nav-pills nav-stacked">
+		<ul id="menuContainer" class="nav nav-pills nav-stacked">
 			<li class="nav-header navTitle"><a href="index.html">INDEX</a></li>
 				<li class="divider"></li>
 				<?js this.searchMembers = []; ?>
@@ -311,14 +344,15 @@
 						findInter.members = findInter.members.concat( interfaces );
 					}
 
-					 
-					//this.nav.topLevelNav.interface.members = interfaces; 
+
+					//this.nav.topLevelNav.interface.members = interfaces;
 
 				?>
 				<?js this.nav.topLevelNav.forEach(function(entry){
 
 					if( entry.members.length!=0)
 					{?>
+<<<<<<< HEAD
 					    <li class="nav-header navTitle">
                             <a class="handCursor" data-toggle="collapse" data-target="#collapse_<?js=entry.title?>"><?js= entry.title ?><span class="badge badge-info pull-right"><?js= entry.members.length ?></span></a>
                         </li>
@@ -326,6 +360,15 @@
                             <div id="collapse_<?js=entry.title?>" class="collapse in">
                                 <ul class="nav nav-list" style="width:100%">
                                     <?js if(entry.title === "Classes"){
+=======
+					    <li id="navTitle_<?js=entry.title?>" class="nav-header navTitle">
+                            <a class="handCursor" data-toggle="collapse" data-id="T_<?js=entry.title?>" data-target="#collapse_<?js=entry.title?>"><?js= entry.title ?><span class="badge badge-info pull-right"><?js= entry.members.length ?></span></a>
+                        </li>
+                        <li id="navContents_<?js=entry.title?>">
+                            <div id="collapse_<?js=entry.title?>" class="collapse">
+                                <ul class="nav nav-list" style="width:100%">
+                                    <?js if(entry.title === "Classes" || entry.title === "Interfaces"){
+>>>>>>> development
 
                                         // Special class process
                                         var constructRoutesObject = function(routesArray){
@@ -363,7 +406,15 @@
                                         };
                                         var classesArray = [];
                                         entry.members.forEach(function(member){
+<<<<<<< HEAD
                                             if ( typeof member !="string" ) classesArray.push( member.namespace.longname );
+=======
+                                            if ( typeof member !="string" )
+                                            {
+                                             that.searchMembers.push ( member.namespace.longname );
+                                             classesArray.push( member.namespace.longname );
+                                            }
+>>>>>>> development
                                         });
                                         var classTree = constructRoutesObject(classesArray);
                                         var htmlClassStructure = formRoutesTree(classTree);
@@ -374,6 +425,7 @@
                             // Regular process
 
                             ?>
+<<<<<<< HEAD
                                         <?js entry.members.forEach(function(member){?>
                                         <li>
                                             <?js if ( typeof member !="string" ) that.searchMembers.push ( member.namespace.longname ); ?>
@@ -381,6 +433,20 @@
                                         </li>
                                         <?js	}); ?>
                                         <li class="divider"></li>
+=======
+                                        <?j<?js entry.members.forEach(function(member){?>
+                                    <li>
+                                        <?js if ( typeof member !="string" ) that.searchMembers.push ( member.namespace.longname );?>
+                                        <?js if ( typeof member !="string" )
+                                        {?>
+                                        	<?js=member.link ?>
+                                        <?js } else { ?>
+                                        	<?js=member?>
+                                        <?js } ?>
+                                    </li>
+                                    <?js	}); ?>
+                             <li class="divider"></li>
+>>>>>>> development
                         <?js } ?>
                                     </ul>
                                 </div>
@@ -401,7 +467,7 @@
 		<?js if(docs && docs[0].kind !== "source"){ ?>
 			<div style="width:100%">
 		<?js }else{ ?>
-			<div class="span12-" style="width:95%">
+			<div style="width:100%">
 		<?js } ?>
 				<div id="main">
 					<?js= content ?>
@@ -481,7 +547,7 @@
 			$('.typeahead').typeahead({
 			  source: searchMembers,
 			  matcher: function(item) {
-			  	console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
+			  	//console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
                 // evaluate item variable and return true if the item was matched.
                 return item.toLowerCase().indexOf( this.query.toLowerCase() )==-1?false:true;
              },
@@ -493,10 +559,17 @@
 			});
 
 
-
+            // Move Tutorials to bottom
+            $('#menuContainer').append($('#navTitle_Tutorials'));
+            $('#menuContainer').append($('#navContents_Tutorials'));
 			$(window).resize(function() {
 			  $('#side-menu').height( $(window).height()-70 );
 			  $('#sideMenuFrame').height( $(window).height()-140 );
+			  if( $(window).width() <480 )
+			  {
+			  	$('#side-menu').hide();
+				$('#docContents').removeClass('sideMenu');
+			  }
 			});
 
 			$(window).trigger('resize')
@@ -510,7 +583,17 @@
 			{
 				document.location.href="index.html"
 
-			})			
+			})		
+
+			var lastMenuSelection = window.localStorage.getItem('lastMenuSelection') || null;
+			if( lastMenuSelection ) $('a[data-id='+lastMenuSelection+']').click();
+			$('a[data-toggle=collapse]').click(function(){
+				if( lastMenuSelection == $(this).attr('data-id') ) return;
+				if( lastMenuSelection ) $('a[data-id='+lastMenuSelection+']').click();
+				lastMenuSelection = $(this).attr('data-id');
+				window.localStorage.setItem('lastMenuSelection', lastMenuSelection )
+			});	
+
 
 		} );
 	</script>
@@ -526,7 +609,7 @@
 			});
 			$( "dt h4.name" ).each( function () {
 				var $this = $( this );
-				var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
+				var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" );
 				var dt = $this.parents( "dt" );
 				var children = dt.next( "dd" );
 
@@ -535,11 +618,11 @@
 
 				children.hide();
 				$this.toggle( function () {
-					icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" ).removeClass( "icon-white" );
+					icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" );
 					$this.addClass( "member-open" ).removeClass( "member-collapsed" );
 					children.slideDown();
 				}, function () {
-					icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" ).addClass( "icon-white" );
+					icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" );
 					$this.addClass( "member-collapsed" ).removeClass( "member-open" );
 					children.slideUp();
 				} );
