@@ -28,6 +28,7 @@
 	"tsdoc":{
 		"source"		:"$SOURCE$",
 		"destination"	:"$DESTINATION$",
+		"tutorials"		:"",
 		"systemName"	: "$PROJECTNAME$",
 		"footer"		: "",
 		"copyright"		: "$PROJECTNAME$ Copyright © $YEAR$ $USERNAME$.",

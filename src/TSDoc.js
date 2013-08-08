@@ -62,7 +62,18 @@ var TSDdoc = (function () {
                 var source = argv.s ? argv.s : configJson.tsdoc.source;
                 var destination = argv.d ? argv.d : configJson.tsdoc.destination;
                 var readme = TSDdoc.getReadmeFile();
-                exec("jsdoc " + configJson.tsdoc.source + " -c " + configFile + " -d " + configJson.tsdoc.destination + readme, TSDdoc.trace);
+                var configFileParam = " -c " + configFile;
+                var destinationParam = " -d " + configJson.tsdoc.destination;
+                var tutorials = configJson.tsdoc.tutorials == "" ? "" : " -u " + configJson.tsdoc.tutorials;
+                var jsonParams = [
+                    "jsdoc ",
+                    configJson.tsdoc.source,
+                    configFileParam,
+                    destinationParam,
+                    tutorials,
+                    readme
+                ].join('');
+                exec(jsonParams, TSDdoc.trace);
             } else {
                 console.log('No tsdoc.json found, please use -i to generate one');
             }

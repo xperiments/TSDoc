@@ -360,10 +360,10 @@ function buildNav( members ) {
 
 	if ( members.tutorials.length ) {
 
-		members.tutorials.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
+		members.tutorials.sort(sort_by('name', true, function(a){return a.toUpperCase()}));
 		members.tutorials.forEach( function ( t ) {
 
-			nav.tutorial.members.push( tutoriallink( t.longname ) );
+			nav.tutorial.members.push( tutoriallink( t.name ) );
 		} );
 
 	}

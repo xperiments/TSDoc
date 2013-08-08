@@ -52,8 +52,10 @@ if( data.params )
 
 }
 var accessType = '';
+
 if(kind === 'function'){
     var buttonClass;
+
     switch(data.access){
         case 'private':
             buttonClass = 'btn-danger';
@@ -69,6 +71,10 @@ if(kind === 'function'){
         break;
     }
     accessType = '<span class="btn btn-mini ' + buttonClass + '" title="' + (data.access ? data.access : 'public') + '">M</span> ';
+}
+if( kind == 'class')
+{
+
 }
 if(kind === 'event' && name.indexOf(':') != -1){
     name = name.split(':')[1];
@@ -182,3 +188,4 @@ if( data.genericAnnotation )
 <?js
 }
 ?>
+ 
