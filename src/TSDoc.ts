@@ -4,26 +4,9 @@ class TSDdoc
 {
 	public static nodePackage = require( './../package.json' );
 
-
-	/**
-	 * @member i
-	 * @param error
-	 * @param stdout
-	 * @param stderr
-	 */
-	public static trace(error, stdout, stderr):void
-	{
-
-		console.log( stdout );
-		if (error !== null)
-		{
-			console.log('exec error: ' + error);
-		}
-	}
-
 	public static cmd():void
 	{
-		var argv = require('optimist');
+		var argv = require('optimist').argv;
 		var fs = require('fs');
 
 		var sys = require('sys')
@@ -31,27 +14,8 @@ class TSDdoc
 		var configFile = process.cwd()+path.sep+'tsdoc.json';
 		var readmeFile = process.cwd()+path.sep+'readme.md';
 		var configContents = fs.readFileSync(path.resolve( __dirname, '..'+path.sep+'template'+path.sep+'tsdoc.json'),'utf8');
-
-
-		argv = argv.usage('TypescriptPreprocessor v'+TSDdoc.nodePackage.version+'\nUsage: $0 --root projectRootDir -source inputFile')
-		.options('s', {
-			alias : 'source',
-			describe:'The root location where JSDoc will search for files to process',
-			default : false,
-			required:false
-		})
-		.options('d', {
-			alias : 'destination',
-			describe:'Output Documentation folder',
-			default : false,
-			required:false
-		})
-		.options('i', {
-			alias : 'install',
-			describe:'Install TSDoc config to current dir',
-			default : false,
-			required:false
-		}).argv;
+		var nodePackage = require( './../package.json' );
+		console.log( 'TSDOC v'+nodePackage.version );
 
 		if( argv.i || argv.install )
 		{
@@ -73,10 +37,10 @@ class TSDdoc
 		{
 			if( fs.existsSync( configFile ) )
 			{
-
+				console.log('TSDoc Generating doc...');
 				var configJson:any = require( configFile );
-				var source:string = argv.s ? argv.s : configJson.tsdoc.source;
-				var destination:string = argv.d ? argv.d : configJson.tsdoc.destination;
+				var source:string = configJson.tsdoc.source;
+				var destination:string = configJson.tsdoc.destination;
 				var readme = TSDdoc.getReadmeFile();
 				var configFileParam = " -c "+configFile;
 				var destinationParam = " -d "+configJson.tsdoc.destination;
@@ -89,12 +53,20 @@ class TSDdoc
 					,tutorials
 					,readme
 				].join('');
-				exec(jsonParams, TSDdoc.trace );
+				exec(jsonParams, TSDdoc.onJSDoc );
 			}
 			else
 			{
 				console.log('No tsdoc.json found, please use -i to generate one')
 			}
+		}
+	}
+	public static onJSDoc(error, stdout, stderr):void
+	{
+		if( stdout!="") console.log(stdout);
+		console.log('TSDoc Done.')
+		if (error !== null) {
+			console.log('exec error: ' + error);
 		}
 	}
 	static getUserName()
@@ -115,7 +87,6 @@ class TSDdoc
 				readme = ' '+files[i];
 			}
 		}
-		console.log( readme )
 		return readme;
 	}
 }
