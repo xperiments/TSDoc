@@ -2,6 +2,8 @@
 var data = obj;
 var self = this;
 
+
+
 function HTMLEncode(str){
   var i = str.length,
       aRet = [];
@@ -32,8 +34,9 @@ if( data.tags )
 
 
 if( isInterface && kind === 'class')
-{
-
+{ ?>
+    <?js= self.linkto(meta.filename, '<div style="font-weight:lighter; float:right;" class="btn sourceBar"><i class="icon-eye-open"></i></div>') ?>
+<?js
 }
 else
 {
@@ -51,8 +54,10 @@ if( data.params )
     }
 
 }
-var accessType = '';
 
+
+var accessType = '';
+var fullAccess="";
 if(kind === 'function'){
     var buttonClass;
 
@@ -71,20 +76,33 @@ if(kind === 'function'){
         break;
     }
     accessType = '<span class="btn btn-mini ' + buttonClass + '" title="' + (data.access ? data.access : 'public') + '">M</span> ';
-}
-if( kind == 'class')
-{
+
+
+    if( data.attribs.indexOf('static')!=-1) fullAccess='<span class="btn btn-mini btn btn-inverse">S</span> ' 
 
 }
+
+if( kind==='event')
+{
+    accessType = '<span class="btn btn-mini btn btn-warning">E</span> ';
+}
+
 if(kind === 'event' && name.indexOf(':') != -1){
     name = name.split(':')[1];
+}
+
+if( kind==='typedef')
+{
+    accessType = '<span class="btn btn-mini btn btn-warning">&rarr;</span> ';
 }
 
 var xreturn = "";
 if( data.returns )
 {
-    xreturn = data.returns[0].type ? " &rarr; {"+data.returns[0].type.names[0]+"}":""
-} else if(kind === 'class') {
+    xreturn = data.returns[0].type ? " &rarr; { <span class='paramSignature'>"+data.returns[0].type.names[0]+"</span> }":""
+}
+else if(kind === 'class')
+{
     xreturn =" &rarr; {void}";
 }
 
@@ -95,8 +113,15 @@ if( data.genericAnnotation )
 }
 ?>
 <dt>
-    <h4 class="name" id="<?js= id ?>"><?js= accessType + (kind === 'class' ? 'new ' : '') + name + gen+(kind !== 'event' ? ( '( '+xparams.join(', ') +' )'+xreturn ) : '') ?>
+    <a name="<?js= name ?>"></a>
 
+    <h4 class="name" id="<?js= id ?>"><?js= fullAccess + accessType + (kind === 'class' ? '<span class="btn btn-mini btn btn-danger">C</span> new ' : '') + name + gen+(kind !== 'event' ? ( '( '+xparams.join(', ') +' )'+xreturn ) : '') ?>
+
+    <?js if (data.meta && kind === 'class' ) { ?>
+
+    <?js= self.linkto(meta.filename, '<div style="font-weight:lighter; float:right;" class="btn sourceBar"><i class="icon-eye-open"></i></div>') ?>
+
+    <?js } ?>
 
     </h4>
     
@@ -138,7 +163,7 @@ if( data.genericAnnotation )
     <?js if (data.fires && fires.length) { ?>
     <h5>Fires:</h5>
     <ul><?js fires.forEach(function(f) { ?>
-        <li><?js= self.linkto(f) ?></li>
+        <li><a href="<?js= f.split('#event:').join('.html#') ?>"><?js= f ?></a></li>
     <?js }); ?></ul>
     <?js } ?>
 
@@ -169,7 +194,7 @@ if( data.genericAnnotation )
     } } ?>
     
     <?js if (data.returns && returns.length) { ?>
-    <h5>Returns:</h5>
+    <span>Returns:</span>
     <?js if (returns.length > 1) { ?><ul><?js
         returns.forEach(function(r) { ?>
             <li><?js= self.partial('returns.tmpl', r) ?></li>

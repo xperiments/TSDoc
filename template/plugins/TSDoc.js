@@ -34,6 +34,15 @@ exports.defineTags = function(dictionary) {
 			doclet.genericAnnotation = HTMLEncode( tag.text ) ||"";
 		}
 	});
+	dictionary.defineTag('ts_enum', {
+		onTagged: function(doclet, tag) {
+
+			doclet.isTSEnum = true;
+
+			//console.log( doclet, tag )
+		}
+	});
+
 
 	dictionary.lookUp('augments').synonym('extends');
 }
@@ -68,6 +77,16 @@ exports.handlers = {
 			e.source = e.source.replace( foundClasses[0], foundClasses[1]+'\n * @generic '+foundClasses[2])
 		}
 
+		// Search for class declarations and check for generics descriptors
+		// Replace it to clean class name & new doclet @generic with the generics descriptor
+		var findEnums = /(@tsenum )(.*)/g;
+		var foundEnums;
+		while ( foundEnums = findEnums.exec(e.source))
+		{
+			e.source = e.source.replace( foundEnums[0], "@typedef "+foundEnums[2]+'\n * @ts_enum ')
+		}
+
+		//console.log( e.source )
 
 
 	}

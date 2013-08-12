@@ -10,8 +10,7 @@
 	"opts":
 	{
 		"template"	:"$TSDOC$",
-		"recurse"	:"true",
-		"private"	:"false"
+		"recurse"	:"true"
 	},
 	"templates" : {
 		"cleverLinks"     : false,

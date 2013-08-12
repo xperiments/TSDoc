@@ -52,7 +52,6 @@
 		{
 			border:none!important;
 		}
-
 		.navTitle
 		{
 			font-size:15px;
@@ -62,6 +61,14 @@
 		.nav-list
 		{
 			width: 100%;
+		}
+		.nav-list
+		{
+			padding-left:20px;
+		}		
+		.nav-list li
+		{
+			line-height: 16px;
 		}
 		.handCursor
 		{
@@ -182,7 +189,10 @@
 		    color:#2fa4e7;
 		}
 
-
+		.sourceBar
+		{
+			margin-top: -5px;
+		}
 
 
 
@@ -331,22 +341,43 @@
 						findInter.members = findInter.members.concat( interfaces );
 					}
 
-
-					//this.nav.topLevelNav.interface.members = interfaces;
-
-				?>
-				<?js this.nav.topLevelNav.forEach(function(entry){
+					var menuOrder =
+					[
+						"tutorials"
+						,"namespaces"
+						,"interfaces"
+						,"classes"
+						,"enums"
+						,"callbacks"		
+					];
+					var orderedTopLevelNav = [];
+					var found = 0;
+					
+					for( var r =0; r<this.nav.topLevelNav.length; r++ )
+					{
+						var current = 0;
+						while( true )
+						{
+							if( this.nav.topLevelNav[r].title.toLowerCase().indexOf( menuOrder[ current] ) !=-1 )
+							{
+								orderedTopLevelNav[ current ] = this.nav.topLevelNav[r];
+								break;	
+							}
+							current++;
+						}
+					}					
+					this.nav.topLevelNav = orderedTopLevelNav;
+					this.nav.topLevelNav.forEach(function(entry){
 
 					if( entry.members.length!=0)
 					{?>
 					    <li id="navTitle_<?js=entry.title?>" class="nav-header navTitle">
-                            <a class="handCursor" data-toggle="collapse" data-id="T_<?js=entry.title?>" data-target="#collapse_<?js=entry.title?>"><?js= entry.title ?><span class="badge badge-info pull-right"><?js= entry.members.length ?></span></a>
+                            <a class="handCursor" data-toggle="collapse" data-id="T_<?js=entry.title?>" data-target="#collapse_<?js=entry.title?>"><?js= entry.title ?><?js if(entry.title !=="Callbacks"){ ?><span class="badge badge-info pull-right"><?js= entry.members.length ?></span><?js } ?></a>
                         </li>
                         <li id="navContents_<?js=entry.title?>">
                             <div id="collapse_<?js=entry.title?>" class="collapse">
-                                <ul class="nav nav-list" style="width:100%">
-                                    <?js if(entry.title === "Classes" || entry.title === "Interfaces"){
-
+                                <ul class="nav nav-list" style="width:100%;margin-left:-8px;">
+                                    <?js if(entry.title === "Classes" || entry.title === "Interfaces" || entry.title ==="Enums" || entry.title ==="Callbacks"){
                                         // Special class process
                                         var constructRoutesObject = function(routesArray){
                                             var tree = {};
@@ -371,7 +402,41 @@
                                             for(var b in routesObject){
                                                 result += '<li>';
                                                 if(typeof routesObject[b] == 'string'){
-                                                    result += '<a href="' + routesObject[b] + '.html">' + b + '</a>';
+
+                                                	var link ="";
+                                                	switch( entry.title )
+                                                	{
+                                                		case "Enums":
+	                                                		var dataLink = routesObject[b].substr(0,routesObject[b].lastIndexOf('.'));
+	                                                		if( dataLink == "" )
+	                                                		{
+	                                                			link = "global"
+	                                                		}
+	                                                		else
+	                                                		{
+	                                                			link = dataLink;	
+	                                                		}
+	                                                		result += '<a href="' + link + '.html#'+b+'">' + b + '</a>';
+                                                		break;
+                                                		case "Callbacks":
+	                                                		link = routesObject[b];
+	                                                		var lnk = link.split('#');
+	                                                		if( lnk[1] )
+	                                                		{
+	                                                			//result += '<a href="' + lnk[0] + '.html#'+(lnk[1]||"")+'">' + b.split('#')[0] + '</a>';
+	                                                		}
+	                                                		else
+	                                                		{
+	                                                			result += '<a href="' + lnk[0].split('.html')[0].split( b.split('#')[0] )[0] + 'html#'+b.split('#')[0]+'">' + b.split('#')[0] + '</a>';	                                                			
+	                                                		}
+	                                                	break;                                                		
+                                                		default:
+	                                                		link = routesObject[b];
+	                                                		result += '<a href="' + link + '.html">' + b + '</a>';
+	                                                	break;
+                                                	}
+
+                                                    
                                                 } else {
                                                     result += '<div class="routeTitle">' + b + '</div><ul class="children nav nav-list">';
                                                     result += formRoutesTree(routesObject[b]);
@@ -385,8 +450,39 @@
                                         entry.members.forEach(function(member){
                                             if ( typeof member !="string" )
                                             {
-                                             that.searchMembers.push ( member.namespace.longname );
-                                             classesArray.push( member.namespace.longname );
+                                            	var lnk="";
+                                            	var realName = member.namespace.longname;
+                                            	var included = true;
+                                            	switch( entry.title )
+                                            	{
+                                            		case "Enums":
+                                            			lnk = member.namespace.longname.substr(0,member.namespace.longname.lastIndexOf('.'));
+                                            		break;
+                                            		case "Callbacks":
+                                            			lnk = member.namespace.longname;
+                                            			if( lnk.indexOf('#')!=-1)
+                                            			{
+                                            				included = false;
+                                            			}
+                                            			else
+                                            			{
+                                            				lnk = member.namespace.longname.substr(0,member.namespace.longname.lastIndexOf('.'))
+                                            			}
+                                            		break;                                            		                                            		                                       		
+                                            		default:
+                                            			lnk = member.namespace.longname;
+                                            		break;
+                                            	}
+                                             	if( included )
+                                             	{
+                                         			that.searchMembers.push ( 
+	                                             	{
+	                                             		realName:realName,
+	                                             		link:lnk
+	                                             	});
+	                                             	classesArray.push( member.namespace.longname );
+	                                            }
+                                             
                                             }
                                         });
                                         var classTree = constructRoutesObject(classesArray);
@@ -400,7 +496,7 @@
                             ?>
                                         <?j<?js entry.members.forEach(function(member){?>
                                     <li>
-                                        <?js if ( typeof member !="string" ) that.searchMembers.push ( member.namespace.longname );?>
+                                        <?js if ( typeof member !="string" ) that.searchMembers.push ( { realName:member.namespace.longname, link:( entry.title ==="Enums" ? member.namespace.longname.substr(0,member.namespace.longname.lastIndexOf('.')):member.namespace.longname )} );?>
                                         <?js if ( typeof member !="string" )
                                         {?>
                                         	<?js=member.link ?>
@@ -481,52 +577,36 @@
 	<script>  Sunlight.highlightAll({lineNumbers:<?js= this.navOptions.linenums ?>,  showMenu: true, enableDoclinks :true}); </script>
 
 	<script>
-
-
-		function search( words )
-		{
-			var wordsArray = words.toLowerCase().split(' ');
-			var results = [];
-			for( var i=0;i<wordsArray.length;i++)
-			{
-				for( var e=0;e<searchMembers.length;e++)
-				{
-					if( searchMembers[e].toLowerCase().indexOf(wordsArray[i])!=-1 )
-					{
-						results.push( searchMembers[e] )
-					}
-				}
-			}
-			var lis = "";
-			for( var i=0;i<results.length;i++)
-			{
-				lis+='<li><a href="'+results[i]+'.html">'+results[i]+'</a></li>';
-			}
-			$('#searchResultsListing').html( lis );
-		}
-
-
 		$( function () {
+
+			var searchItems = [];
+			var searchMap = {};
+			var mapName = "";
+			for( var i=0; i<searchMembers.length; i++ )
+			{
+				realName = searchMembers[i].realName;
+				searchItems.push( realName );
+				searchMap[ realName ] = searchMembers[ i ];
+			}
 
 
 			$('.typeahead').typeahead({
-			  source: searchMembers,
+			  source: searchItems,
 			  matcher: function(item) {
 			  	//console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
                 // evaluate item variable and return true if the item was matched.
                 return item.toLowerCase().indexOf( this.query.toLowerCase() )==-1?false:true;
              },
 			  updater: function (item) {
-
-					window.location.href = item+'.html';
+					window.location.href = searchMap[ item ].link+'.html';
 			  }
 
 			});
 
 
             // Move Tutorials to bottom
-            $('#menuContainer').append($('#navTitle_Tutorials'));
-            $('#menuContainer').append($('#navContents_Tutorials'));
+            //$('#menuContainer').append($('#navTitle_Tutorials'));
+            //$('#menuContainer').append($('#navContents_Tutorials'));
 			$(window).resize(function() {
 			  $('#side-menu').height( $(window).height()-70 );
 			  $('#sideMenuFrame').height( $(window).height()-140 );
@@ -550,6 +630,7 @@
 
 			})		
 
+			$('.sourceBar').click(function(){})
 			var lastMenuSelection = window.localStorage.getItem('lastMenuSelection') || null;
 			if( lastMenuSelection ) $('a[data-id='+lastMenuSelection+']').click();
 			$('a[data-toggle=collapse]').click(function(){
@@ -574,24 +655,25 @@
 			});
 			$( "dt h4.name" ).each( function () {
 				var $this = $( this );
-				var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" );
+				//var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" );
 				var dt = $this.parents( "dt" );
 				var children = dt.next( "dd" );
 
-				$this.append( icon ).css( {cursor : "pointer"} );
+				//$this.append( icon ).css( {cursor : "pointer"} );
 				$this.addClass( "member-collapsed" ).addClass( "member" );
 
 				children.hide();
 				$this.toggle( function () {
-					icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" );
+					//icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" );
 					$this.addClass( "member-open" ).removeClass( "member-collapsed" );
 					children.slideDown();
 				}, function () {
-					icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" );
+					//icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" );
 					$this.addClass( "member-collapsed" ).removeClass( "member-open" );
 					children.slideUp();
 				} );
 			} );
+			$('.sourceBar').click(function(event){event.stopPropagation();})
 		} );
 	</script>
 	<?js } ?>

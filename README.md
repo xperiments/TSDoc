@@ -6,10 +6,27 @@ Actually it only supports parsing of plain comments, also it needs some added "m
 
 ![image](http://xperiments.github.io/TSDoc/TSDocScreen.png)
 
+
+## Changes ##
+
+### v0.0.3 ###
+* Added Auto Include of root Readme.md
+* Added basic Generics support
+* Added Enums support
+* Added Callbacks support
+* Added Tutorial support
+* Enhaced search with autocomplete
+
+### v0.0.1 ###
+ 
+ * Initial Release 
+
+
 ## Annotating your TS project
 
-See an example of annotated comments that works with TS
-[Example](DocGuide.md)
+You can find annotated source files inside the output [example](http://xperiments.github.io/TSDoc/docs/index.html) ( Click the eye icon to see the source )
+
+
 
 ## Instalation ##
 
@@ -27,7 +44,8 @@ TSDoc uses the same [conf.json](http://usejsdoc.org/about-configuring-jsdoc.html
 		"systemName"		:"{string}",
 		"footer"			:"{string}",
 		"copyright"			:"{string}",
-		"outputSourceFiles" :{boolean}
+		"outputSourceFiles" :"{boolean}",
+		"commentsOnly" 		:"{boolean}"
 	}
 
 
@@ -35,10 +53,12 @@ TSDoc uses the same [conf.json](http://usejsdoc.org/about-configuring-jsdoc.html
 
 * __source__ Source folder where search .ts files
 * __destination__ Documentation output folder
+* __tutorials__ Set the source folder for tutorial parsing (.md, .html files)
 * __systemName__ The project name
 * __footer__ Footer string added to each page
 * __copyright__ Copyright string added to each page
 * __outputSourceFiles__ Set to true to enable source files processing 
+* __commentsOnly__ Set to false to use template with plain JS ( experimental )
 
 ### Adding a default tsdoc.json file
 
@@ -48,14 +68,11 @@ You can automatically add a new tsdoc.json file to any folder in yor system, typ
 
 ## Command line options ##
 
-	$> tsdoc -i [--install] 
+	$> tsdoc -i [--install]
 	This will install the necesary tsdoc files to the current working directory.
-	
-	$> tsdoc -s [--source]
-	Overrides tsdoc.json source folder settings.
-	
-	$> tsdoc -d [--destination]
-	Overrides tsdoc.json destination settings.
+
+	$> tsdoc
+	Generaties documentation from tsdoc.json settings.
 	
 ## License ##
 		
