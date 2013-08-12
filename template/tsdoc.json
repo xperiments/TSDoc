@@ -10,8 +10,7 @@
 	"opts":
 	{
 		"template"	:"$TSDOC$",
-		"recurse"	:"true",
-		"private"	:"false"
+		"recurse"	:"true"
 	},
 	"templates" : {
 		"cleverLinks"     : false,
@@ -28,6 +27,7 @@
 	"tsdoc":{
 		"source"		:"$SOURCE$",
 		"destination"	:"$DESTINATION$",
+		"tutorials"		:"",
 		"systemName"	: "$PROJECTNAME$",
 		"footer"		: "",
 		"copyright"		: "$PROJECTNAME$ Copyright © $YEAR$ $USERNAME$.",

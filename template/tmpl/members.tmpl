@@ -1,9 +1,41 @@
 <?js
 var data = obj;
 var self = this;
+
+var accessType = '';
+var fullAccess="";
+
+    var buttonClass;
+
+    switch(data.access){
+        case 'private':
+            buttonClass = 'btn-danger';
+        break;
+        case 'static':
+            buttonClass = 'btn-warning';
+        break;
+        case 'override':
+            buttonClass = 'btn-info';
+        break;
+        default:
+            buttonClass = 'btn-success';
+        break;
+    }
+
+    if( data.attribs.indexOf('static')!=-1) fullAccess='<span class="btn btn-mini btn btn-inverse">S</span> ' 
+
+    if( data.isTSEnum )
+    {
+        accessType = '<span class="btn btn-mini ' + buttonClass + '" title="' + (data.access ? data.access : 'public') + '">ENUM</span> ';
+    }
+    else
+    {
+        accessType = '<span class="btn btn-mini ' + buttonClass + '" title="' + (data.access ? data.access : 'public') + '">P</span> ';
+    }
+
 ?>
 <dt>
-    <h4 class="name" id="<?js= id ?>"><?js= data.attribs + name + (data.signature ? data.signature : '') ?></h4>
+    <a name="<?js= id ?>"></a><h4 class="name" id="<?js= id ?>"><?js= fullAccess + accessType + name + (data.signature ? data.signature : '') ?></h4>
     
     <?js if (data.summary) { ?>
     <p class="summary"><?js= summary ?></p>

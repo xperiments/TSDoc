@@ -3,6 +3,9 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
 	<title><?js= this.navOptions.systemName ?> <?js= title ?></title>
 
 	<!--[if lt IE 9]>
@@ -24,7 +27,7 @@
 		}
 		#main
 		{
-			margin-top: 40px;
+			margin-top: 46px;
 		}
 		#mainMenu
 		{
@@ -49,7 +52,6 @@
 		{
 			border:none!important;
 		}
-
 		.navTitle
 		{
 			font-size:15px;
@@ -59,6 +61,14 @@
 		.nav-list
 		{
 			width: 100%;
+		}
+		.nav-list
+		{
+			padding-left:20px;
+		}		
+		.nav-list li
+		{
+			line-height: 16px;
 		}
 		.handCursor
 		{
@@ -83,7 +93,7 @@
 			line-height: 18px;
 			color: #000;
 			border-bottom: 1px solid rgba(0,0,0,.2);
-			z-index: 1;
+			z-index: 10;
 		}
 		h1, h2, h3, h4, h5, h6 {
 			font-family: 'Helvetica Neue';
@@ -99,6 +109,7 @@
 			font-weight: lighter;
 			font-size: 28px;
 			letter-spacing: -2px;
+			padding-top:0px;
 		}
 
 		.well
@@ -152,14 +163,21 @@
 		}
 
 		.member {
-			font-size: 16px;
+			font-size: 14px;
+			color:#000;
+			background-color:#FFF;
+			border:1px solid #2fa4e7;
 		}
+		.member:hover {
+
+			background-color:#F6F6F6;
+		}		
 		.member-open .paramSignature{
-			font-size: 16px;
+			font-size: 14px;
 			color: #2fa4e7;
 		}
 		.member-collapsed .paramSignature{
-			font-size: 16px;
+			font-size: 14px;
 			color: #2fa4e7;
 		}
 		.routeTitle{
@@ -171,9 +189,10 @@
 		    color:#2fa4e7;
 		}
 
-        .member-open .genericAnnotation {
-            color: #FFF;
-        }
+		.sourceBar
+		{
+			margin-top: -5px;
+		}
 
 
 
@@ -259,7 +278,7 @@
 			<input type="text" id="searchBox" class="search-query typeahead" placeholder="Search">
 		</div>
 		<div class="menuFrame" id="sideMenuFrame">
-		<ul class="nav nav-pills nav-stacked">
+		<ul id="menuContainer" class="nav nav-pills nav-stacked">
 			<li class="nav-header navTitle"><a href="index.html">INDEX</a></li>
 				<li class="divider"></li>
 				<?js this.searchMembers = []; ?>
@@ -321,23 +340,68 @@
 					{
 						findInter.members = findInter.members.concat( interfaces );
 					}
+					/*
+					var menuOrder;
+					if( this.nav.topLevelNav.Tutorials )
+					{
+						menuOrder =
+						[
+							"Tutorials"
+							,"Namespaces"
+							,"Interfaces"
+							,"Classes"
+							,"Enums"
+							,"Callbacks"		
+						];
+					}
+					else
+					{
+						menuOrder =
+						[
+							"Namespaces"
+							,"Interfaces"
+							,"Classes"
+							,"Enums"
+							,"Callbacks"		
+						];						
+					}
 
-					 
-					//this.nav.topLevelNav.interface.members = interfaces; 
-
-				?>
-				<?js this.nav.topLevelNav.forEach(function(entry){
+					var orderedTopLevelNav = [];
+					var found = 0;
+					
+					console.log( this.nav.topLevelNav)
+					for( var r =0; r<this.nav.topLevelNav.length; r++ )
+					{
+						var current = 0;
+						while( true )
+						{
+							console.log( this.nav.topLevelNav[r].title )
+							if( this.nav.topLevelNav[r].title.indexOf( menuOrder[ current] ) !=-1 )
+							{
+								orderedTopLevelNav[ current ] = this.nav.topLevelNav[r];
+								current++;
+								break;	
+							}
+							
+						}
+					}		
+					console.log( '=================3=')
+					console.log( orderedTopLevelNav)
+					
+					//this.nav.topLevelNav = orderedTopLevelNav;
+					console.log( this.nav.topLevelNav)	
+					*/		
+					this.nav.topLevelNav.forEach(function(entry){
 
 					if( entry.members.length!=0)
 					{?>
-					    <li class="nav-header navTitle">
-                            <a class="handCursor" data-toggle="collapse" data-target="#collapse_<?js=entry.title?>"><?js= entry.title ?><span class="badge badge-info pull-right"><?js= entry.members.length ?></span></a>
+					    <li id="navTitle_<?js=entry.title?>" class="nav-header navTitle">
+                            <a class="handCursor" data-toggle="collapse" data-id="T_<?js=entry.title?>" data-target="#collapse_<?js=entry.title?>"><?js= entry.title ?><?js if(entry.title !=="Callbacks"){ ?><span class="badge badge-info pull-right"><?js= entry.members.length ?></span><?js } ?></a>
                         </li>
-                        <li>
-                            <div id="collapse_<?js=entry.title?>" class="collapse in">
-                                <ul class="nav nav-list" style="width:100%">
-                                    <?js if(entry.title === "Classes" || entry.title === "Interfaces"){
-
+                        <li id="navContents_<?js=entry.title?>">
+                            <div id="collapse_<?js=entry.title?>" class="collapse">
+                                <ul class="nav nav-list" style="width:100%;margin-left:-8px;">
+                                    <?js if(entry.title === "Classes" || entry.title === "Interfaces" || entry.title ==="Enums" || entry.title ==="Callbacks"){
                                         // Special class process
                                         var constructRoutesObject = function(routesArray){
                                             var tree = {};
@@ -362,7 +426,41 @@
                                             for(var b in routesObject){
                                                 result += '<li>';
                                                 if(typeof routesObject[b] == 'string'){
-                                                    result += '<a href="' + routesObject[b] + '.html">' + b + '</a>';
+
+                                                	var link ="";
+                                                	switch( entry.title )
+                                                	{
+                                                		case "Enums":
+	                                                		var dataLink = routesObject[b].substr(0,routesObject[b].lastIndexOf('.'));
+	                                                		if( dataLink == "" )
+	                                                		{
+	                                                			link = "global"
+	                                                		}
+	                                                		else
+	                                                		{
+	                                                			link = dataLink;	
+	                                                		}
+	                                                		result += '<a href="' + link + '.html#'+b+'">' + b + '</a>';
+                                                		break;
+                                                		case "Callbacks":
+	                                                		link = routesObject[b];
+	                                                		var lnk = link.split('#');
+	                                                		if( lnk[1] )
+	                                                		{
+	                                                			//result += '<a href="' + lnk[0] + '.html#'+(lnk[1]||"")+'">' + b.split('#')[0] + '</a>';
+	                                                		}
+	                                                		else
+	                                                		{
+	                                                			result += '<a href="' + lnk[0].split('.html')[0].split( b.split('#')[0] )[0] + 'html#'+b.split('#')[0]+'">' + b.split('#')[0] + '</a>';	                                                			
+	                                                		}
+	                                                	break;                                                		
+                                                		default:
+	                                                		link = routesObject[b];
+	                                                		result += '<a href="' + link + '.html">' + b + '</a>';
+	                                                	break;
+                                                	}
+
+                                                    
                                                 } else {
                                                     result += '<div class="routeTitle">' + b + '</div><ul class="children nav nav-list">';
                                                     result += formRoutesTree(routesObject[b]);
@@ -376,8 +474,39 @@
                                         entry.members.forEach(function(member){
                                             if ( typeof member !="string" )
                                             {
-                                             that.searchMembers.push ( member.namespace.longname );
-                                             classesArray.push( member.namespace.longname );
+                                            	var lnk="";
+                                            	var realName = member.namespace.longname;
+                                            	var included = true;
+                                            	switch( entry.title )
+                                            	{
+                                            		case "Enums":
+                                            			lnk = member.namespace.longname.substr(0,member.namespace.longname.lastIndexOf('.'));
+                                            		break;
+                                            		case "Callbacks":
+                                            			lnk = member.namespace.longname;
+                                            			if( lnk.indexOf('#')!=-1)
+                                            			{
+                                            				included = false;
+                                            			}
+                                            			else
+                                            			{
+                                            				lnk = member.namespace.longname.substr(0,member.namespace.longname.lastIndexOf('.'))
+                                            			}
+                                            		break;                                            		                                            		                                       		
+                                            		default:
+                                            			lnk = member.namespace.longname;
+                                            		break;
+                                            	}
+                                             	if( included )
+                                             	{
+                                         			that.searchMembers.push ( 
+	                                             	{
+	                                             		realName:realName,
+	                                             		link:lnk
+	                                             	});
+	                                             	classesArray.push( member.namespace.longname );
+	                                            }
+                                             
                                             }
                                         });
                                         var classTree = constructRoutesObject(classesArray);
@@ -389,13 +518,18 @@
                             // Regular process
 
                             ?>
-                                        <?js entry.members.forEach(function(member){?>
-                                        <li>
-                                            <?js if ( typeof member !="string" ) that.searchMembers.push ( member.namespace.longname ); ?>
-                                            <?js= member.link ?>
-                                        </li>
-                                        <?js	}); ?>
-                                        <li class="divider"></li>
+                                        <?j<?js entry.members.forEach(function(member){?>
+                                    <li>
+                                        <?js if ( typeof member !="string" ) that.searchMembers.push ( { realName:member.namespace.longname, link:( entry.title ==="Enums" ? member.namespace.longname.substr(0,member.namespace.longname.lastIndexOf('.')):member.namespace.longname )} );?>
+                                        <?js if ( typeof member !="string" )
+                                        {?>
+                                        	<?js=member.link ?>
+                                        <?js } else { ?>
+                                        	<?js=member?>
+                                        <?js } ?>
+                                    </li>
+                                    <?js	}); ?>
+                             <li class="divider"></li>
                         <?js } ?>
                                     </ul>
                                 </div>
@@ -416,7 +550,7 @@
 		<?js if(docs && docs[0].kind !== "source"){ ?>
 			<div style="width:100%">
 		<?js }else{ ?>
-			<div class="span12-" style="width:95%">
+			<div style="width:100%">
 		<?js } ?>
 				<div id="main">
 					<?js= content ?>
@@ -467,53 +601,44 @@
 	<script>  Sunlight.highlightAll({lineNumbers:<?js= this.navOptions.linenums ?>,  showMenu: true, enableDoclinks :true}); </script>
 
 	<script>
-
-
-		function search( words )
-		{
-			var wordsArray = words.toLowerCase().split(' ');
-			var results = [];
-			for( var i=0;i<wordsArray.length;i++)
-			{
-				for( var e=0;e<searchMembers.length;e++)
-				{
-					if( searchMembers[e].toLowerCase().indexOf(wordsArray[i])!=-1 )
-					{
-						results.push( searchMembers[e] )
-					}
-				}
-			}
-			var lis = "";
-			for( var i=0;i<results.length;i++)
-			{
-				lis+='<li><a href="'+results[i]+'.html">'+results[i]+'</a></li>';
-			}
-			$('#searchResultsListing').html( lis );
-		}
-
-
 		$( function () {
+
+			var searchItems = [];
+			var searchMap = {};
+			var mapName = "";
+			for( var i=0; i<searchMembers.length; i++ )
+			{
+				realName = searchMembers[i].realName;
+				searchItems.push( realName );
+				searchMap[ realName ] = searchMembers[ i ];
+			}
 
 
 			$('.typeahead').typeahead({
-			  source: searchMembers,
+			  source: searchItems,
 			  matcher: function(item) {
 			  	//console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
                 // evaluate item variable and return true if the item was matched.
                 return item.toLowerCase().indexOf( this.query.toLowerCase() )==-1?false:true;
              },
 			  updater: function (item) {
-
-					window.location.href = item+'.html';
+					window.location.href = searchMap[ item ].link+'.html';
 			  }
 
 			});
 
 
-
+            // Move Tutorials to bottom
+            //$('#menuContainer').append($('#navTitle_Tutorials'));
+            //$('#menuContainer').append($('#navContents_Tutorials'));
 			$(window).resize(function() {
 			  $('#side-menu').height( $(window).height()-70 );
 			  $('#sideMenuFrame').height( $(window).height()-140 );
+			  if( $(window).width() <480 )
+			  {
+			  	$('#side-menu').hide();
+				$('#docContents').removeClass('sideMenu');
+			  }
 			});
 
 			$(window).trigger('resize')
@@ -527,7 +652,18 @@
 			{
 				document.location.href="index.html"
 
-			})			
+			})		
+
+			$('.sourceBar').click(function(){})
+			var lastMenuSelection = window.localStorage.getItem('lastMenuSelection') || null;
+			if( lastMenuSelection ) $('a[data-id='+lastMenuSelection+']').click();
+			$('a[data-toggle=collapse]').click(function(){
+				if( lastMenuSelection == $(this).attr('data-id') ) return;
+				if( lastMenuSelection ) $('a[data-id='+lastMenuSelection+']').click();
+				lastMenuSelection = $(this).attr('data-id');
+				window.localStorage.setItem('lastMenuSelection', lastMenuSelection )
+			});	
+
 
 		} );
 	</script>
@@ -543,24 +679,25 @@
 			});
 			$( "dt h4.name" ).each( function () {
 				var $this = $( this );
-				var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
+				//var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" );
 				var dt = $this.parents( "dt" );
 				var children = dt.next( "dd" );
 
-				$this.append( icon ).css( {cursor : "pointer"} );
+				//$this.append( icon ).css( {cursor : "pointer"} );
 				$this.addClass( "member-collapsed" ).addClass( "member" );
 
 				children.hide();
 				$this.toggle( function () {
-					icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" ).removeClass( "icon-white" );
+					//icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" );
 					$this.addClass( "member-open" ).removeClass( "member-collapsed" );
 					children.slideDown();
 				}, function () {
-					icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" ).addClass( "icon-white" );
+					//icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" );
 					$this.addClass( "member-collapsed" ).removeClass( "member-open" );
 					children.slideUp();
 				} );
 			} );
+			$('.sourceBar').click(function(event){event.stopPropagation();})
 		} );
 	</script>
 	<?js } ?>

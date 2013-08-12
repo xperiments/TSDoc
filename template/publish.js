@@ -35,10 +35,82 @@ var navOptions = {
 	inverseNav      : false
 };
 
+
+/**
+ * Check whether a symbol is a function and is the only symbol exported by a module (as in
+ * `module.exports = function() {};`).
+ *
+ * @private
+ * @param {module:jsdoc/doclet.Doclet} doclet - The doclet for the symbol.
+ * @return {boolean} `true` if the symbol is a function and is the only symbol exported by a module;
+ * otherwise, `false`.
+ */
+function isModuleFunction2(doclet) {
+	return doclet.longname && doclet.longname === doclet.name &&
+		doclet.longname.indexOf('module:') === 0 && doclet.kind === 'function';
+}
+
+/**
+ * Retrieve all of the following types of members from a set of doclets:
+ *
+ * + Classes
+ * + Externals
+ * + Globals
+ * + Mixins
+ * + Modules
+ * + Namespaces
+ * + Events
+ * @param {TAFFY} data The TaffyDB database to search.
+ * @return {object} An object with `classes`, `externals`, `globals`, `mixins`, `modules`,
+ * `events`, and `namespaces` properties. Each property contains an array of objects.
+ */
+function getMembers2(data) {
+	var find = function(data, spec) {
+		return data(spec).get();
+	};
+	var members = {
+		classes: find( data, {kind: 'class'} ),
+		externals: find( data, {kind: 'external'} ),
+		events: find( data, {kind: 'event'} ),
+		globals: find(data, {
+			kind: ['member', 'function', 'constant', 'typedef'],
+			memberof: { isUndefined: true }
+		}),
+		mixins: find( data, {kind: 'mixin'} ),
+		modules: find( data, {kind: 'module'} ),
+		namespaces: find( data, {kind: 'namespace'}),
+		typedef: find( data, {kind: 'typedef', isTSEnum:{is:true} }),
+		callbacks: find( data, {kind: 'typedef', isTSEnum:{isUndefined:true} })
+
+
+	};
+
+
+
+	// functions that are also modules (as in "module.exports = function() {};") are not globals
+	members.globals = members.globals.filter(function(doclet) {
+		if ( isModuleFunction2(doclet) ) {
+			return false;
+		}
+
+		return true;
+	});
+
+	return members;
+};
+
+
+
+
 var navigationMaster = {
 	index     : {
 		title   : navOptions.systemName,
 		link    : indexUrl,
+		members : []
+	},
+	tutorial : {
+		title   : "Tutorials",
+		link    : helper.getUniqueFilename( "tutorials.list" ),
 		members : []
 	},
 	namespace : {
@@ -51,13 +123,13 @@ var navigationMaster = {
 		link    : helper.getUniqueFilename( "modules.list" ),
 		members : []
 	},
-	class     : {
-		title   : "Classes",
+	interface     : {
+		title   : "Interfaces",
 		link    : helper.getUniqueFilename( 'classes.list' ),
 		members : []
 	},
-	interface     : {
-		title   : "Interfaces",
+	class     : {
+		title   : "Classes",
 		link    : helper.getUniqueFilename( 'classes.list' ),
 		members : []
 	},
@@ -71,11 +143,6 @@ var navigationMaster = {
 		link    : helper.getUniqueFilename( "events.list" ),
 		members : []
 	},
-	tutorial : {
-		title   : "Tutorials",
-		link    : helper.getUniqueFilename( "tutorials.list" ),
-		members : []
-	},
 	global    : {
 		title   : "Global",
 		link    : globalUrl,
@@ -85,6 +152,16 @@ var navigationMaster = {
 	external : {
 		title   : "Externals",
 		link    : helper.getUniqueFilename( "externals.list" ),
+		members : []
+	},
+	typedef : {
+		title   : "Enums",
+		link    : helper.getUniqueFilename( "enums.list" ),
+		members : []
+	},
+	callbacks : {
+		title   : "Callbacks",
+		link    : helper.getUniqueFilename( "namespaces.list" ),
 		members : []
 	}
 };
@@ -279,6 +356,9 @@ function buildNav( members ) {
 
 	var seen = {};
 	var nav = navigationMaster;
+
+
+
 	if ( members.modules.length ) {
 
 		members.modules.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
@@ -316,26 +396,50 @@ function buildNav( members ) {
 
 	}
 	/*
-	if ( members.events.length ) {
+	 if ( members.events.length ) {
 
-		members.events.forEach( function ( e ) {
-			if ( !hasOwnProp.call( seen, e.longname ) ) {
+	 members.events.forEach( function ( e ) {
+	 if ( !hasOwnProp.call( seen, e.longname ) ) {
 
-				nav.event.members.push( linkto( e.longname, e.name ) );
+	 nav.event.members.push( linkto( e.longname, e.name ) );
+
+	 }
+	 seen[e.longname] = true;
+	 } );
+
+	 }*/
+
+
+	if ( members.typedef.length ) {
+
+		members.typedef.forEach( function ( td ) {
+			if ( !hasOwnProp.call( seen, td.longname ) ) {
+
+				nav.typedef.members.push( {link:linkto( td.name, td.name ), namespace:{ longname:td.longname } });
 
 			}
-			seen[e.longname] = true;
+			seen[td.longname] = true;
 		} );
-		
-	}*/
 
+	}
+	if ( members.callbacks.length ) {
 
+		members.callbacks.forEach( function ( cb ) {
+			if ( !hasOwnProp.call( seen, cb.longname ) ) {
+
+				nav.callbacks.members.push( {link:linkto( cb.longname, cb.longname.split('#')[0] ), namespace:{ longname:cb.longname } });
+
+			}
+			seen[cb.longname] = true;
+		} );
+
+	}
 	if ( members.namespaces.length ) {
 
 
 		members.namespaces.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
 		members.namespaces.forEach( function ( n ) {
-			
+
 			if ( !hasOwnProp.call( seen, n.longname ))
 			{
 				nav.namespace.members.push( { link: linkto( n.longname, n.longname ), namespace:n} );
@@ -360,10 +464,10 @@ function buildNav( members ) {
 
 	if ( members.tutorials.length ) {
 
-		members.tutorials.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
+		members.tutorials.sort(sort_by('name', true, function(a){return a.toUpperCase()}));
 		members.tutorials.forEach( function ( t ) {
 
-			nav.tutorial.members.push( tutoriallink( t.longname ) );
+			nav.tutorial.members.push( tutoriallink( t.name ) );
 		} );
 
 	}
@@ -390,7 +494,11 @@ function buildNav( members ) {
 			} );
 		}
 	} );
+
+
+
 	nav.topLevelNav = topLevelNav;
+
 }
 
 /**
@@ -534,7 +642,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		}
 	} );
 
-	var members = helper.getMembers( data );
+	var members = getMembers2( data );
 	members.tutorials = tutorials.children;
 
 	// add template helpers
@@ -600,6 +708,18 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		], navigationMaster.tutorial.link );
 	}
 
+	if ( view.nav.typedef && view.nav.typedef.members.length ) {
+		generate( 'typedef', view.nav.typedef.title, [
+			{kind : 'sectionIndex', contents : view.nav.typedef}
+		], navigationMaster.typedef.link );
+	}
+
+	if ( view.nav.callbacks && view.nav.callbacks.members.length ) {
+		generate( 'callbacks', view.nav.callbacks.title, [
+			{kind : 'sectionIndex', contents : view.nav.callbacks}
+		], navigationMaster.callbacks.link );
+	}
+
 	// index page displays information from package.json and lists files
 	var files = find( {kind : 'file'} ),
 		packages = find( {kind : 'package'} );
@@ -618,6 +738,8 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 	var namespaces = taffy( members.namespaces );
 	var mixins = taffy( members.mixins );
 	var externals = taffy( members.externals );
+	var typedefs = taffy( members.typedef );
+	var callbacks = taffy( members.callbacks );
 
 	for ( var longname in helper.longnameToUrl ) {
 		if ( hasOwnProp.call( helper.longnameToUrl, longname ) ) {
@@ -628,14 +750,14 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 				if( dta && dta.tags )
 				{
 					var isInterface = false;
-				    for( var i=0; i<dta.tags.length; i++ )
-				    {
-				        if( dta.tags[i].title=="interface")
-				        {
-				            isInterface = true; 
-				        }
-				    }
-					
+					for( var i=0; i<dta.tags.length; i++ )
+					{
+						if( dta.tags[i].title=="interface")
+						{
+							isInterface = true;
+						}
+					}
+
 					if( isInterface )
 					{
 						generate( 'class', 'Interface: ' + myClasses[0].name, myClasses, helper.longnameToUrl[longname] );
@@ -666,7 +788,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 					if( namesNS.indexOf( myNamespaces[ns].longname)==-1 )
 					{
 						outNS.push( myNamespaces[ns]);
-						namesNS.push( myNamespaces[ns].longname );	
+						namesNS.push( myNamespaces[ns].longname );
 					}
 				}
 				generate( 'namespace', 'Namespace: ' + outNS[0].longname, outNS, helper.longnameToUrl[longname] );
@@ -680,6 +802,21 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 			var myExternals = helper.find( externals, {longname : longname} );
 			if ( myExternals.length ) {
 				generate( 'external', 'External: ' + myExternals[0].name, myExternals, helper.longnameToUrl[longname] );
+			}
+			var myTypedefs = helper.find( typedefs, {longname : longname} );
+			if ( myTypedefs.length ) {
+				generate( 'typedef', 'Enums: ' + myTypedefs[0].name, myTypedefs, helper.longnameToUrl[longname] );
+			}
+			var myCallbacks = helper.find( callbacks, {longname : longname} );
+			if ( myCallbacks.length ) {
+				if( longname.indexOf('#')==-1)
+				{
+					generate( 'callbacks', 'Callbacks: ' + myCallbacks[0].name, myCallbacks, helper.longnameToUrl[longname] );
+				}
+				else
+				{
+					generate( 'callbacks', 'Callbacks: ' + myCallbacks[0].name, myCallbacks, longname.split('#')[0] );
+				}
 			}
 		}
 	}
@@ -711,5 +848,5 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		} );
 	}
 
-	saveChildren( tutorials );
+	if( tutorials && tutorials.length>0) saveChildren( tutorials );
 };
