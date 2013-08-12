@@ -340,33 +340,57 @@
 					{
 						findInter.members = findInter.members.concat( interfaces );
 					}
+					/*
+					var menuOrder;
+					if( this.nav.topLevelNav.Tutorials )
+					{
+						menuOrder =
+						[
+							"Tutorials"
+							,"Namespaces"
+							,"Interfaces"
+							,"Classes"
+							,"Enums"
+							,"Callbacks"		
+						];
+					}
+					else
+					{
+						menuOrder =
+						[
+							"Namespaces"
+							,"Interfaces"
+							,"Classes"
+							,"Enums"
+							,"Callbacks"		
+						];						
+					}
 
-					var menuOrder =
-					[
-						"tutorials"
-						,"namespaces"
-						,"interfaces"
-						,"classes"
-						,"enums"
-						,"callbacks"		
-					];
 					var orderedTopLevelNav = [];
 					var found = 0;
 					
+					console.log( this.nav.topLevelNav)
 					for( var r =0; r<this.nav.topLevelNav.length; r++ )
 					{
 						var current = 0;
 						while( true )
 						{
-							if( this.nav.topLevelNav[r].title.toLowerCase().indexOf( menuOrder[ current] ) !=-1 )
+							console.log( this.nav.topLevelNav[r].title )
+							if( this.nav.topLevelNav[r].title.indexOf( menuOrder[ current] ) !=-1 )
 							{
 								orderedTopLevelNav[ current ] = this.nav.topLevelNav[r];
+								current++;
 								break;	
 							}
-							current++;
+							
 						}
-					}					
-					this.nav.topLevelNav = orderedTopLevelNav;
+					}		
+					console.log( '=================3=')
+					console.log( orderedTopLevelNav)
+					
+					//this.nav.topLevelNav = orderedTopLevelNav;
+					console.log( this.nav.topLevelNav)	
+					*/		
 					this.nav.topLevelNav.forEach(function(entry){
 
 					if( entry.members.length!=0)

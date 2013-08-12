@@ -22,7 +22,7 @@ var TSDdoc = (function () {
             outConfig = outConfig.replace(/\$SOURCE\$/gi, process.cwd() + path.sep + 'src' + path.sep);
             outConfig = outConfig.replace(/\$DESTINATION\$/gi, process.cwd() + path.sep + 'docs');
             outConfig = outConfig.replace(/\$USERNAME\$/gi, TSDdoc.getUserName());
-            outConfig = outConfig.replace(/\YEAR\$/gi, new Date().getFullYear());
+            outConfig = outConfig.replace(/\$YEAR\$/gi, new Date().getFullYear());
             outConfig = outConfig.replace(/\$PROJECTNAME\$/gi, process.cwd().substr(process.cwd().lastIndexOf(path.sep) + 1));
 
             fs.writeFileSync(configFile, outConfig, 'utf8');

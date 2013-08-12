@@ -10,10 +10,11 @@ Actually it only supports parsing of plain comments, also it needs some added "m
 ## Changes ##
 
 ### v0.0.3 ###
-* Added Auto Include of root Readme.md
+* Added Auto Include of Readme.md file
 * Added basic Generics support
 * Added Enums support
 * Added Callbacks support
+* Added Events support
 * Added Tutorial support
 * Enhaced search with autocomplete
 

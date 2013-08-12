@@ -46,8 +46,8 @@ var navOptions = {
  * otherwise, `false`.
  */
 function isModuleFunction2(doclet) {
-    return doclet.longname && doclet.longname === doclet.name &&
-        doclet.longname.indexOf('module:') === 0 && doclet.kind === 'function';
+	return doclet.longname && doclet.longname === doclet.name &&
+		doclet.longname.indexOf('module:') === 0 && doclet.kind === 'function';
 }
 
 /**
@@ -66,37 +66,37 @@ function isModuleFunction2(doclet) {
  */
 function getMembers2(data) {
 	var find = function(data, spec) {
-    	return data(spec).get();
+		return data(spec).get();
 	};
-    var members = {
-        classes: find( data, {kind: 'class'} ),
-        externals: find( data, {kind: 'external'} ),
-        events: find( data, {kind: 'event'} ),
-        globals: find(data, {
-            kind: ['member', 'function', 'constant', 'typedef'],
-            memberof: { isUndefined: true }
-        }),
-        mixins: find( data, {kind: 'mixin'} ),
-        modules: find( data, {kind: 'module'} ),
-        namespaces: find( data, {kind: 'namespace'}), 
-        typedef: find( data, {kind: 'typedef', isTSEnum:{is:true} }),
-        callbacks: find( data, {kind: 'typedef', isTSEnum:{isUndefined:true} })
-
-        	
-    };
+	var members = {
+		classes: find( data, {kind: 'class'} ),
+		externals: find( data, {kind: 'external'} ),
+		events: find( data, {kind: 'event'} ),
+		globals: find(data, {
+			kind: ['member', 'function', 'constant', 'typedef'],
+			memberof: { isUndefined: true }
+		}),
+		mixins: find( data, {kind: 'mixin'} ),
+		modules: find( data, {kind: 'module'} ),
+		namespaces: find( data, {kind: 'namespace'}),
+		typedef: find( data, {kind: 'typedef', isTSEnum:{is:true} }),
+		callbacks: find( data, {kind: 'typedef', isTSEnum:{isUndefined:true} })
 
 
+	};
 
-    // functions that are also modules (as in "module.exports = function() {};") are not globals
-    members.globals = members.globals.filter(function(doclet) {
-        if ( isModuleFunction2(doclet) ) {
-            return false;
-        }
 
-        return true;
-    });
- 
-    return members;
+
+	// functions that are also modules (as in "module.exports = function() {};") are not globals
+	members.globals = members.globals.filter(function(doclet) {
+		if ( isModuleFunction2(doclet) ) {
+			return false;
+		}
+
+		return true;
+	});
+
+	return members;
 };
 
 
@@ -112,7 +112,7 @@ var navigationMaster = {
 		title   : "Tutorials",
 		link    : helper.getUniqueFilename( "tutorials.list" ),
 		members : []
-	},	
+	},
 	namespace : {
 		title   : "Namespaces",
 		link    : helper.getUniqueFilename( "namespaces.list" ),
@@ -122,12 +122,12 @@ var navigationMaster = {
 		title   : "Modules",
 		link    : helper.getUniqueFilename( "modules.list" ),
 		members : []
-	}, 
+	},
 	interface     : {
 		title   : "Interfaces",
 		link    : helper.getUniqueFilename( 'classes.list' ),
 		members : []
-	},	
+	},
 	class     : {
 		title   : "Classes",
 		link    : helper.getUniqueFilename( 'classes.list' ),
@@ -163,7 +163,7 @@ var navigationMaster = {
 		title   : "Callbacks",
 		link    : helper.getUniqueFilename( "namespaces.list" ),
 		members : []
-	}	
+	}
 };
 
 function find( spec ) {
@@ -396,20 +396,20 @@ function buildNav( members ) {
 
 	}
 	/*
-	if ( members.events.length ) {
+	 if ( members.events.length ) {
 
-		members.events.forEach( function ( e ) {
-			if ( !hasOwnProp.call( seen, e.longname ) ) {
+	 members.events.forEach( function ( e ) {
+	 if ( !hasOwnProp.call( seen, e.longname ) ) {
 
-				nav.event.members.push( linkto( e.longname, e.name ) );
+	 nav.event.members.push( linkto( e.longname, e.name ) );
 
-			}
-			seen[e.longname] = true;
-		} );
-		
-	}*/
+	 }
+	 seen[e.longname] = true;
+	 } );
 
-	
+	 }*/
+
+
 	if ( members.typedef.length ) {
 
 		members.typedef.forEach( function ( td ) {
@@ -420,7 +420,7 @@ function buildNav( members ) {
 			}
 			seen[td.longname] = true;
 		} );
-		
+
 	}
 	if ( members.callbacks.length ) {
 
@@ -432,14 +432,14 @@ function buildNav( members ) {
 			}
 			seen[cb.longname] = true;
 		} );
-		
+
 	}
 	if ( members.namespaces.length ) {
 
 
 		members.namespaces.sort(sort_by('longname', true, function(a){return a.toUpperCase()}));
 		members.namespaces.forEach( function ( n ) {
-			
+
 			if ( !hasOwnProp.call( seen, n.longname ))
 			{
 				nav.namespace.members.push( { link: linkto( n.longname, n.longname ), namespace:n} );
@@ -750,14 +750,14 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 				if( dta && dta.tags )
 				{
 					var isInterface = false;
-				    for( var i=0; i<dta.tags.length; i++ )
-				    {
-				        if( dta.tags[i].title=="interface")
-				        {
-				            isInterface = true; 
-				        }
-				    }
-					
+					for( var i=0; i<dta.tags.length; i++ )
+					{
+						if( dta.tags[i].title=="interface")
+						{
+							isInterface = true;
+						}
+					}
+
 					if( isInterface )
 					{
 						generate( 'class', 'Interface: ' + myClasses[0].name, myClasses, helper.longnameToUrl[longname] );
@@ -788,7 +788,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 					if( namesNS.indexOf( myNamespaces[ns].longname)==-1 )
 					{
 						outNS.push( myNamespaces[ns]);
-						namesNS.push( myNamespaces[ns].longname );	
+						namesNS.push( myNamespaces[ns].longname );
 					}
 				}
 				generate( 'namespace', 'Namespace: ' + outNS[0].longname, outNS, helper.longnameToUrl[longname] );
@@ -806,7 +806,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 			var myTypedefs = helper.find( typedefs, {longname : longname} );
 			if ( myTypedefs.length ) {
 				generate( 'typedef', 'Enums: ' + myTypedefs[0].name, myTypedefs, helper.longnameToUrl[longname] );
-			}	
+			}
 			var myCallbacks = helper.find( callbacks, {longname : longname} );
 			if ( myCallbacks.length ) {
 				if( longname.indexOf('#')==-1)
@@ -817,7 +817,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 				{
 					generate( 'callbacks', 'Callbacks: ' + myCallbacks[0].name, myCallbacks, longname.split('#')[0] );
 				}
-			}					
+			}
 		}
 	}
 
@@ -848,5 +848,5 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		} );
 	}
 
-	saveChildren( tutorials );
+	if( tutorials && tutorials.length>0) saveChildren( tutorials );
 };
