@@ -3,6 +3,9 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
 	<title>TSDOC Namespace: pulsar</title>
 
 	<!--[if lt IE 9]>
@@ -21,7 +24,7 @@
 		}
 		#main
 		{
-			margin-top: 40px;
+			margin-top: 46px;
 		}
 		#mainMenu
 		{
@@ -46,7 +49,6 @@
 		{
 			border:none!important;
 		}
-
 		.navTitle
 		{
 			font-size:15px;
@@ -56,6 +58,14 @@
 		.nav-list
 		{
 			width: 100%;
+		}
+		.nav-list
+		{
+			padding-left:20px;
+		}		
+		.nav-list li
+		{
+			line-height: 16px;
 		}
 		.handCursor
 		{
@@ -80,7 +90,7 @@
 			line-height: 18px;
 			color: #000;
 			border-bottom: 1px solid rgba(0,0,0,.2);
-			z-index: 1;
+			z-index: 10;
 		}
 		h1, h2, h3, h4, h5, h6 {
 			font-family: 'Helvetica Neue';
@@ -96,6 +106,7 @@
 			font-weight: lighter;
 			font-size: 28px;
 			letter-spacing: -2px;
+			padding-top:0px;
 		}
 
 		.well
@@ -149,8 +160,38 @@
 		}
 
 		.member {
-			font-size: 16px;
+			font-size: 14px;
+			color:#000;
+			background-color:#FFF;
+			border:1px solid #2fa4e7;
 		}
+		.member:hover {
+
+			background-color:#F6F6F6;
+		}		
+		.member-open .paramSignature{
+			font-size: 14px;
+			color: #2fa4e7;
+		}
+		.member-collapsed .paramSignature{
+			font-size: 14px;
+			color: #2fa4e7;
+		}
+		.routeTitle{
+		    cursor: pointer;
+		}
+
+		.genericAnnotation
+		{
+		    color:#2fa4e7;
+		}
+
+		.sourceBar
+		{
+			margin-top: -5px;
+		}
+
+
 
 .twitter-typeahead
 {
@@ -234,98 +275,81 @@
 			<input type="text" id="searchBox" class="search-query typeahead" placeholder="Search">
 		</div>
 		<div class="menuFrame" id="sideMenuFrame">
-		<ul class="nav nav-pills nav-stacked">
+		<ul id="menuContainer" class="nav nav-pills nav-stacked">
 			<li class="nav-header navTitle"><a href="index.html">INDEX</a></li>
 				<li class="divider"></li>
 				
 				
-				
-						<li class="nav-header navTitle">
-							<!--<a href="namespaces.list.html">Namespaces</a>-->
-
-							<a class="handCursor" data-toggle="collapse" data-target="#collapse_Namespaces">Namespaces<span class="badge badge-info pull-right">2</span></a>
-						</li>
-						<li><div id="collapse_Namespaces" class="collapse in">
-							<ul class="nav nav-list" style="width:100%">
-								
-								<li>
-									
-									<a href="pulsar.html">pulsar</a>
-								</li>
-								
-								<li>
-									
-									<a href="pulsar.events.html">pulsar.events</a>
-								</li>
-								
-								<li class="divider"></li>
-							</ul>
-							
-						</div></li>
-
-				
-				
-						<li class="nav-header navTitle">
-							<!--<a href="classes.list.html">Classes</a>-->
-
-							<a class="handCursor" data-toggle="collapse" data-target="#collapse_Classes">Classes<span class="badge badge-info pull-right">3</span></a>
-						</li>
-						<li><div id="collapse_Classes" class="collapse in">
-							<ul class="nav nav-list" style="width:100%">
-								
-								<li>
-									
-									<a href="pulsar.events.Event.html">pulsar.events.Event</a>
-								</li>
-								
-								<li>
-									
-									<a href="pulsar.events.EventDispatcher.html">pulsar.events.EventDispatcher</a>
-								</li>
-								
-								<li>
-									
-									<a href="pulsar.events.ExtendedEvent.html">pulsar.events.ExtendedEvent</a>
-								</li>
-								
-								<li class="divider"></li>
-							</ul>
-							
-						</div></li>
-
-				
-				
-						<li class="nav-header navTitle">
-							<!--<a href="classes.list.html">Interfaces</a>-->
-
-							<a class="handCursor" data-toggle="collapse" data-target="#collapse_Interfaces">Interfaces<span class="badge badge-info pull-right">2</span></a>
-						</li>
-						<li><div id="collapse_Interfaces" class="collapse in">
-							<ul class="nav nav-list" style="width:100%">
-								
-								<li>
-									
-									<a href="pulsar.events.IEvent.html">pulsar.events.IEvent</a>
-								</li>
-								
-								<li>
-									
-									<a href="pulsar.events.IListenerCallback.html">pulsar.events.IListenerCallback</a>
-								</li>
-								
-								<li class="divider"></li>
-							</ul>
-							
-						</div></li>
-
-				
-				
+					    <li id="navTitle_Namespaces" class="nav-header navTitle">
+                            <a class="handCursor" data-toggle="collapse" data-id="T_Namespaces" data-target="#collapse_Namespaces">Namespaces<span class="badge badge-info pull-right">2</span></a>
+                        </li>
+                        <li id="navContents_Namespaces">
+                            <div id="collapse_Namespaces" class="collapse">
+                                <ul class="nav nav-list" style="width:100%;margin-left:-8px;">
+                                    
+                                        <?j
+                                    <li>
+                                        
+                                        
+                                        	<a href="pulsar.html">pulsar</a>
+                                        
+                                    </li>
+                                    
+                                    <li>
+                                        
+                                        
+                                        	<a href="pulsar.tsdoc.html">pulsar.tsdoc</a>
+                                        
+                                    </li>
+                                    
+                             <li class="divider"></li>
+                        
+                                    </ul>
+                                </div>
+                            </li>
+                        
+					    <li id="navTitle_Classes" class="nav-header navTitle">
+                            <a class="handCursor" data-toggle="collapse" data-id="T_Classes" data-target="#collapse_Classes">Classes<span class="badge badge-info pull-right">3</span></a>
+                        </li>
+                        <li id="navContents_Classes">
+                            <div id="collapse_Classes" class="collapse">
+                                <ul class="nav nav-list" style="width:100%;margin-left:-8px;">
+                                    <li><div class="routeTitle">pulsar</div><ul class="children nav nav-list"><li><div class="routeTitle">tsdoc</div><ul class="children nav nav-list"><li><a href="pulsar.tsdoc.Callbacks.html">Callbacks</a></li><li><a href="pulsar.tsdoc.FullClass.html">FullClass</a></li><li><a href="pulsar.tsdoc.GenericClass.html">GenericClass</a></li></ul></li></ul></li>
+                            
+                                    </ul>
+                                </div>
+                            </li>
+                        
+					    <li id="navTitle_Callbacks" class="nav-header navTitle">
+                            <a class="handCursor" data-toggle="collapse" data-id="T_Callbacks" data-target="#collapse_Callbacks">Callbacks</a>
+                        </li>
+                        <li id="navContents_Callbacks">
+                            <div id="collapse_Callbacks" class="collapse">
+                                <ul class="nav nav-list" style="width:100%;margin-left:-8px;">
+                                    <li><div class="routeTitle">pulsar</div><ul class="children nav nav-list"><li><div class="routeTitle">tsdoc</div><ul class="children nav nav-list"><li><a href="pulsar.tsdoc.html#ICallBack">ICallBack</a></li></ul></li></ul></li>
+                            
+                                    </ul>
+                                </div>
+                            </li>
+                        
+					    <li id="navTitle_Interfaces" class="nav-header navTitle">
+                            <a class="handCursor" data-toggle="collapse" data-id="T_Interfaces" data-target="#collapse_Interfaces">Interfaces<span class="badge badge-info pull-right">1</span></a>
+                        </li>
+                        <li id="navContents_Interfaces">
+                            <div id="collapse_Interfaces" class="collapse">
+                                <ul class="nav nav-list" style="width:100%;margin-left:-8px;">
+                                    <li><div class="routeTitle">pulsar</div><ul class="children nav nav-list"><li><div class="routeTitle">tsdoc</div><ul class="children nav nav-list"><li><a href="pulsar.tsdoc.IInterface.html">IInterface</a></li></ul></li></ul></li>
+                            
+                                    </ul>
+                                </div>
+                            </li>
+                        
 
 		</ul>
 		</div>
 
 		<script>
-			var searchMembers = ["pulsar","pulsar.events","pulsar.events.Event","pulsar.events.EventDispatcher","pulsar.events.ExtendedEvent","pulsar.events.IEvent","pulsar.events.IListenerCallback"];
+			var searchMembers = [{"realName":"pulsar","link":"pulsar"},{"realName":"pulsar.tsdoc","link":"pulsar.tsdoc"},{"realName":"pulsar.tsdoc.Callbacks","link":"pulsar.tsdoc.Callbacks"},{"realName":"pulsar.tsdoc.FullClass","link":"pulsar.tsdoc.FullClass"},{"realName":"pulsar.tsdoc.GenericClass","link":"pulsar.tsdoc.GenericClass"},{"realName":"pulsar.tsdoc.ICallBack","link":"pulsar.tsdoc"},{"realName":"pulsar.tsdoc.IInterface","link":"pulsar.tsdoc.IInterface"}];
 		</script>
     </aside>
 	</div>
@@ -380,7 +404,7 @@
         <h3 class="subsection-title">Namespaces</h3>
 
         <dl>
-                    <dt><a href="namespaces.html#pulsar.events"><a href="pulsar.events.html">events</a></a></dt>
+                    <dt><a href="namespaces.html#pulsar.tsdoc"><a href="pulsar.tsdoc.html">tsdoc</a></a></dt>
                     <dd></dd>
                 </dl>
     
@@ -413,9 +437,10 @@
 
     
 
+    <!-- xperiments
     
-    <dt style="font-weight:lighter;" class="btn"><i class="icon-eye-open"></i> <a href="Event.ts.html">Event.ts</a></dt>
-    
+    <dt style="font-weight:lighter;" class="btn"><i class="icon-eye-open"></i> <a href="Callbacks.ts.html">Callbacks.ts</a></dt>
+    -->
 
     
 
@@ -438,13 +463,13 @@
 					
 					
 						<span class="copyright">
-						TSDOC Copyright © $2013 pcasaubon.
+						TSDOC Copyright ©2013 pcasaubon.
 						</span>
 									<br />
 									
 						<span class="jsdoc-message">
 						Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0</a>
-						on Mon Aug 05 2013 11:39:12 GMT+0200 (CEST) using the <a href="https://github.com/xperiments/TSDoc">TSDoc template</a>.
+						on Mon Aug 12 2013 15:46:32 GMT+0200 (CEST) using the <a href="https://github.com/xperiments/TSDoc">TSDoc template</a>.
 						</span>
 				</footer>
 			</div>
@@ -475,53 +500,44 @@
 	<script>  Sunlight.highlightAll({lineNumbers:false,  showMenu: true, enableDoclinks :true}); </script>
 
 	<script>
-
-
-		function search( words )
-		{
-			var wordsArray = words.toLowerCase().split(' ');
-			var results = [];
-			for( var i=0;i<wordsArray.length;i++)
-			{
-				for( var e=0;e<searchMembers.length;e++)
-				{
-					if( searchMembers[e].toLowerCase().indexOf(wordsArray[i])!=-1 )
-					{
-						results.push( searchMembers[e] )
-					}
-				}
-			}
-			var lis = "";
-			for( var i=0;i<results.length;i++)
-			{
-				lis+='<li><a href="'+results[i]+'.html">'+results[i]+'</a></li>';
-			}
-			$('#searchResultsListing').html( lis );
-		}
-
-
 		$( function () {
+
+			var searchItems = [];
+			var searchMap = {};
+			var mapName = "";
+			for( var i=0; i<searchMembers.length; i++ )
+			{
+				realName = searchMembers[i].realName;
+				searchItems.push( realName );
+				searchMap[ realName ] = searchMembers[ i ];
+			}
 
 
 			$('.typeahead').typeahead({
-			  source: searchMembers,
+			  source: searchItems,
 			  matcher: function(item) {
-			  	console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
+			  	//console.log('aaa'+item, this.query, item.indexOf( this.query.toLowerCase() )==-1?false:true)
                 // evaluate item variable and return true if the item was matched.
                 return item.toLowerCase().indexOf( this.query.toLowerCase() )==-1?false:true;
              },
 			  updater: function (item) {
-
-					window.location.href = item+'.html';
+					window.location.href = searchMap[ item ].link+'.html';
 			  }
 
 			});
 
 
-
+            // Move Tutorials to bottom
+            //$('#menuContainer').append($('#navTitle_Tutorials'));
+            //$('#menuContainer').append($('#navContents_Tutorials'));
 			$(window).resize(function() {
 			  $('#side-menu').height( $(window).height()-70 );
 			  $('#sideMenuFrame').height( $(window).height()-140 );
+			  if( $(window).width() <480 )
+			  {
+			  	$('#side-menu').hide();
+				$('#docContents').removeClass('sideMenu');
+			  }
 			});
 
 			$(window).trigger('resize')
@@ -535,7 +551,18 @@
 			{
 				document.location.href="index.html"
 
-			})			
+			})		
+
+			$('.sourceBar').click(function(){})
+			var lastMenuSelection = window.localStorage.getItem('lastMenuSelection') || null;
+			if( lastMenuSelection ) $('a[data-id='+lastMenuSelection+']').click();
+			$('a[data-toggle=collapse]').click(function(){
+				if( lastMenuSelection == $(this).attr('data-id') ) return;
+				if( lastMenuSelection ) $('a[data-id='+lastMenuSelection+']').click();
+				lastMenuSelection = $(this).attr('data-id');
+				window.localStorage.setItem('lastMenuSelection', lastMenuSelection )
+			});	
+
 
 		} );
 	</script>
@@ -546,27 +573,30 @@
 			$('#main').localScroll({
 				offset: { top: 56 } //offset by the height of your header (give or take a few px, see what works for you)
 			});
-
+			$(".routeTitle").on('click', function(){
+			    $(this).next().slideToggle();
+			});
 			$( "dt h4.name" ).each( function () {
 				var $this = $( this );
-				var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
+				//var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" );
 				var dt = $this.parents( "dt" );
 				var children = dt.next( "dd" );
 
-				$this.append( icon ).css( {cursor : "pointer"} );
+				//$this.append( icon ).css( {cursor : "pointer"} );
 				$this.addClass( "member-collapsed" ).addClass( "member" );
 
 				children.hide();
 				$this.toggle( function () {
-					icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" ).removeClass( "icon-white" );
+					//icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" );
 					$this.addClass( "member-open" ).removeClass( "member-collapsed" );
 					children.slideDown();
 				}, function () {
-					icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" ).addClass( "icon-white" );
+					//icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" );
 					$this.addClass( "member-collapsed" ).removeClass( "member-open" );
 					children.slideUp();
 				} );
 			} );
+			$('.sourceBar').click(function(event){event.stopPropagation();})
 		} );
 	</script>
 	

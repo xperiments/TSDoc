@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
-	<title>TSDOC Index</title>
+	<title>TSDOC Source: Callbacks.ts</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -362,107 +362,48 @@
 					
 
 
-	
-	       <!-- <span class="page-title">Index</span> -->
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
+		<h1 class="page-title">Source: Callbacks.ts</h1>
+    
     <section>
-        <article><h1>TSDoc</h1>
-<p>A <a href="http://usejsdoc.org/">JSDoc3</a> base themed generator generator for use with Typescript Projects, uses a highly modified version <a href="https://github.com/terryweiss/docstrap/">Docstrap</a> JsDoc3 Template. </p>
-<p>Actually it only supports parsing of plain comments, also it needs some added &quot;manual&quot; anotation. You can see an output <a href="http://xperiments.github.io/TSDoc/docs/index.html">Example</a>.</p>
-<p><img src="http://xperiments.github.io/TSDoc/TSDocScreen.png" alt="image"></p>
-<h2>Changes</h2>
-<h3>v0.0.3</h3>
-<ul>
-<li>Added Auto Include of root Readme.md</li>
-<li>Added basic Generics support</li>
-<li>Added Enums support</li>
-<li>Added Callbacks support</li>
-<li>Added Tutorial support</li>
-<li>Enhaced search with autocomplete</li>
-</ul>
-<h3>v0.0.1</h3>
-<ul>
-<li>Initial Release </li>
-</ul>
-<h2>Annotating your TS project</h2>
-<p>You can find annotated source files inside the output <a href="http://xperiments.github.io/TSDoc/docs/index.html">example</a> ( Click the eye icon to see the source )</p>
-<h2>Instalation</h2>
-<pre><code>sudo npm install tsdoc -g</code></pre>
-<h2>Preparing your project</h2>
-<h3>Configuration</h3>
-<p>TSDoc uses the same <a href="http://usejsdoc.org/about-configuring-jsdoc.html">conf.json</a> (now tsdoc.json) config file used in JsDoc3, but adds the following new options:</p>
-<pre><code>&quot;tsdoc&quot;:{
-    &quot;source&quot;            :&quot;{string}&quot;,
-    &quot;destination&quot;        :&quot;{string}&quot;,
-    &quot;systemName&quot;        :&quot;{string}&quot;,
-    &quot;footer&quot;            :&quot;{string}&quot;,
-    &quot;copyright&quot;            :&quot;{string}&quot;,
-    &quot;outputSourceFiles&quot; :&quot;{boolean}&quot;,
-    &quot;commentsOnly&quot;         :&quot;{boolean}&quot;
-}</code></pre>
-<h4>Options</h4>
-<ul>
-<li><strong>source</strong> Source folder where search .ts files</li>
-<li><strong>destination</strong> Documentation output folder</li>
-<li><strong>tutorials</strong> Set the source folder for tutorial parsing (.md, .html files)</li>
-<li><strong>systemName</strong> The project name</li>
-<li><strong>footer</strong> Footer string added to each page</li>
-<li><strong>copyright</strong> Copyright string added to each page</li>
-<li><strong>outputSourceFiles</strong> Set to true to enable source files processing </li>
-<li><strong>commentsOnly</strong> Set to false to use template with plain JS ( experimental )</li>
-</ul>
-<h3>Adding a default tsdoc.json file</h3>
-<p>You can automatically add a new tsdoc.json file to any folder in yor system, typing in your console:</p>
-<pre><code>$&gt; tsdoc -i</code></pre>
-<h2>Command line options</h2>
-<pre><code>$&gt; tsdoc -i [--install]
-This will install the necesary tsdoc files to the current working directory.
+        <article>
+            <pre class="sunlight-highlight-javascript ">/**
+ * @namespace pulsar
+ */
+/**
+ * @namespace pulsar.tsdoc
+ */
+module pulsar.tsdoc
+{
+    /**
+     * CallBack Description
+     * @callback pulsar.tsdoc.ICallBack
+     * @param {string} name Param Description
+     * @returns {string}
+     */
+    export interface ICallBack
+    {
+        (name: string):string;
+    }
 
-$&gt; tsdoc
-Generaties documentation from tsdoc.json settings.</code></pre>
-<h2>License</h2>
-<p>Copyright (c) 2013 Pedro Casaubon. All rights reserved.</p>
-<p>Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the &quot;Software&quot;), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:</p>
-<p>The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.</p></article>
+    /**
+     * Class Description Title
+     * @class pulsar.tsdoc.Callbacks
+     * @classdesc Class Description
+     */
+    export class Callbacks
+    {
+        /**
+         * CallBack Description
+         * @callback
+         * @callback pulsar.tsdoc.Callbacks#myCallback
+         * @param {string} name Param Description
+         * @returns {string}
+         */
+        public myCallback: (name: string) => string;
+    }
+}</pre>
+        </article>
     </section>
-
-
 
 
 
@@ -486,10 +427,6 @@ OTHER DEALINGS IN THE SOFTWARE.</p></article>
 				</footer>
 			</div>
 			<!--
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
 			
 			-->
 			<br clear="both">
