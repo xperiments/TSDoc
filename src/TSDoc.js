@@ -79,7 +79,7 @@ var TSDdoc = (function () {
 
     TSDdoc.processPath = function (path) {
         path = path.indexOf(':') != -1 ? path.split(':')[1] : path;
-        path = path.replace('\\', '/');
+        path = path.replace(/\\/gi, '/');
         return path;
     };
     TSDdoc.nodePackage = require('./../package.json');
