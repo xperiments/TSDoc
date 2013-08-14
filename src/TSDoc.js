@@ -18,12 +18,12 @@ var TSDdoc = (function () {
         if (argv.i || argv.install) {
             var parentDir = path.resolve(process.cwd(), '..' + path.sep);
             var templateDir = path.resolve(__dirname, '..' + path.sep + 'template');
-            var outConfig = configContents.replace(/\$TSDOC\$/gi, templateDir);
-            outConfig = outConfig.replace(/\$SOURCE\$/gi, process.cwd() + path.sep + 'src' + path.sep);
-            outConfig = outConfig.replace(/\$DESTINATION\$/gi, process.cwd() + path.sep + 'docs');
+            var outConfig = configContents.replace(/\$TSDOC\$/gi, TSDdoc.processPath(templateDir));
+            outConfig = outConfig.replace(/\$SOURCE\$/gi, TSDdoc.processPath(process.cwd() + path.sep + 'src' + path.sep));
+            outConfig = outConfig.replace(/\$DESTINATION\$/gi, TSDdoc.processPath(process.cwd() + path.sep + 'docs'));
             outConfig = outConfig.replace(/\$USERNAME\$/gi, TSDdoc.getUserName());
             outConfig = outConfig.replace(/\$YEAR\$/gi, new Date().getFullYear());
-            outConfig = outConfig.replace(/\$PROJECTNAME\$/gi, process.cwd().substr(process.cwd().lastIndexOf(path.sep) + 1));
+            outConfig = outConfig.replace(/\$PROJECTNAME\$/gi, TSDdoc.processPath(process.cwd().substr(process.cwd().lastIndexOf(path.sep) + 1)));
 
             fs.writeFileSync(configFile, outConfig, 'utf8');
             console.log('TSDoc tsdoc.json generated.');
@@ -75,6 +75,12 @@ var TSDdoc = (function () {
             }
         }
         return readme;
+    };
+
+    TSDdoc.processPath = function (path) {
+        path = path.indexOf(':') != -1 ? path.split(':')[1] : path;
+        path = path.replace(/\\/gi, '/');
+        return path;
     };
     TSDdoc.nodePackage = require('./../package.json');
     return TSDdoc;

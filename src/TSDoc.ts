@@ -22,12 +22,12 @@ class TSDdoc
 
 			var parentDir = path.resolve( process.cwd(), '..'+path.sep);
 			var templateDir = path.resolve( __dirname, '..'+path.sep+'template');
-			var outConfig = configContents.replace(/\$TSDOC\$/gi, templateDir );
-				outConfig = outConfig.replace(/\$SOURCE\$/gi, process.cwd()+path.sep+'src'+path.sep );
-				outConfig = outConfig.replace(/\$DESTINATION\$/gi, process.cwd()+path.sep+'docs' );
-				outConfig = outConfig.replace(/\$USERNAME\$/gi, TSDdoc.getUserName() );
-				outConfig = outConfig.replace(/\$YEAR\$/gi, new Date().getFullYear() );
-				outConfig = outConfig.replace(/\$PROJECTNAME\$/gi, process.cwd().substr( process.cwd().lastIndexOf( path.sep )+1 ) );
+			var outConfig = configContents.replace(/\$TSDOC\$/gi, TSDdoc.processPath( templateDir ) );
+			outConfig = outConfig.replace(/\$SOURCE\$/gi, TSDdoc.processPath( process.cwd()+path.sep+'src'+path.sep ) );
+			outConfig = outConfig.replace(/\$DESTINATION\$/gi, TSDdoc.processPath( process.cwd()+path.sep+'docs' ) );
+			outConfig = outConfig.replace(/\$USERNAME\$/gi, TSDdoc.getUserName() );
+			outConfig = outConfig.replace(/\$YEAR\$/gi, new Date().getFullYear() );
+			outConfig = outConfig.replace(/\$PROJECTNAME\$/gi, TSDdoc.processPath( process.cwd().substr( process.cwd().lastIndexOf( path.sep )+1 ) ) );
 
 			fs.writeFileSync( configFile, outConfig, 'utf8');
 			console.log('TSDoc tsdoc.json generated.');
@@ -46,7 +46,7 @@ class TSDdoc
 				var destinationParam = " -d "+configJson.tsdoc.destination;
 				var tutorials = configJson.tsdoc.tutorials == "" ? "":" -u "+configJson.tsdoc.tutorials;
 				var jsonParams = [
-					 "jsdoc "
+					"jsdoc "
 					,configJson.tsdoc.source
 					,configFileParam
 					,destinationParam
@@ -88,6 +88,13 @@ class TSDdoc
 			}
 		}
 		return readme;
+	}
+
+	private static processPath( path:string ):string
+	{
+		path = path.indexOf(':')!=-1 ? path.split(':')[1] : path;
+		path = path.replace(/\\/gi,'/');
+		return path;
 	}
 }
 (module).exports = TSDdoc;
