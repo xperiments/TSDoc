@@ -9,6 +9,9 @@ Actually it only supports parsing of plain comments, also it needs some added "m
 
 ## Changes ##
 
+### v0.0.4 ###
+* Added Windows Support
+
 ### v0.0.3 ###
 * Added Auto Include of Readme.md file
 * Added basic Generics support
