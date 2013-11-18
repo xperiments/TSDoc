@@ -66,6 +66,10 @@ exports.handlers = {
 			if (comments) {
 				e.source = comments.join('\n\n');
 			}
+			else {
+				e.source = "";
+				return;
+			}
 		}
 
 		// Search for class declarations and check for generics descriptors
