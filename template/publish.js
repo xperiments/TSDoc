@@ -848,5 +848,5 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		} );
 	}
 
-	if( tutorials && tutorials.length>0) saveChildren( tutorials );
+	if( tutorials && tutorials.children.length > 0) saveChildren( tutorials );
 };
