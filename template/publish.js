@@ -464,7 +464,7 @@ function buildNav( members ) {
 
 	if ( members.tutorials.length ) {
 		var excRe = new RegExp(env.conf.templates.excludeTutorials, 'i');
-		members.tutorials.sort(sort_by('name', true, function(a){return a.toUpperCase()}));
+		members.tutorials.sort(sort_by('title', true, function(a){return a.toUpperCase()}));
 		members.tutorials.forEach( function ( t ) {
 			if(excRe.test(t.name)) {
 				return;
