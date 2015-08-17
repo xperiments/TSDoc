@@ -1,6 +1,7 @@
 <?js
     var self = this;
-    docs.forEach(function(doc, i) {
+    var doc = docs[0];
+    var i = 0;
 ?>
 
 <?js if (doc.kind === 'mainpage' || (doc.kind === 'package')) { ?>
@@ -31,24 +32,26 @@
 
 <article>
     <div class="container-overview">
-    <?js if (doc.kind === 'module' && doc.module) { ?>
-        <?js= self.partial('method.tmpl', doc.module) ?>
-    <?js } ?>
-
-    <?js if (doc.kind === 'class') { ?>
-        <?js= self.partial('method.tmpl', doc) ?>
-    <?js } else { ?>
-        <?js if (doc.description) { ?>
-            <div class="description"><?js= doc.description ?></div>
+    <?js docs.forEach(function(doc, i) { ?>
+        <?js if (doc.kind === 'module' && doc.module) { ?>
+            <?js= self.partial('method.tmpl', doc.module) ?>
         <?js } ?>
 
-        
+        <?js if (doc.kind === 'class' && doc.comment.indexOf('construct') >= 0) { ?>
+            <?js= self.partial('method.tmpl', doc) ?>
+        <?js } else { ?>
+            <?js if (doc.description) { ?>
+                <div class="description"><?js= doc.description ?></div>
+            <?js } ?>
 
-        <?js if (doc.examples && doc.examples.length) { ?>
-            <h3>Example<?js= doc.examples.length > 1? 's':'' ?></h3>
-            <?js= self.partial('examples.tmpl', doc.examples) ?>
+            
+
+            <?js if (doc.examples && doc.examples.length) { ?>
+                <h3>Example<?js= doc.examples.length > 1? 's':'' ?></h3>
+                <?js= self.partial('examples.tmpl', doc.examples) ?>
+            <?js } ?>
         <?js } ?>
-    <?js } ?>
+    <?js }); ?>
     </div>
 
    <?js if (doc.implements) { ?>
@@ -155,6 +158,7 @@
 
     <?js
         var methods = self.find({kind: 'function', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
+
         if (methods && methods.length && methods.forEach) {
     ?>
         <h3 class="subsection-title">Methods</h3>
@@ -195,10 +199,10 @@
         <?js }); ?></dl>
     <?js } ?>
 
-    <?js= self.partial('details.tmpl', doc) ?>
+    <?js docs.forEach(function(doc) { ?>
+        <?js= self.partial('details.tmpl', doc) ?>
+    <?js }); ?>
 </article>
 
 </section>
 <?js } ?>
-
-<?js }); ?>

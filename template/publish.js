@@ -463,10 +463,12 @@ function buildNav( members ) {
 	}
 
 	if ( members.tutorials.length ) {
-
-		members.tutorials.sort(sort_by('name', true, function(a){return a.toUpperCase()}));
+		var excRe = new RegExp(env.conf.templates.excludeTutorials, 'i');
+		members.tutorials.sort(sort_by('title', true, function(a){return a.toUpperCase()}));
 		members.tutorials.forEach( function ( t ) {
-
+			if(excRe.test(t.name)) {
+				return;
+			}
 			nav.tutorial.members.push( tutoriallink( t.name ) );
 		} );
 
@@ -842,11 +844,16 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 
 	// tutorials can have only one parent so there is no risk for loops
 	function saveChildren( node ) {
+		var excRe = new RegExp(env.conf.templates.excludeTutorials, 'i');
 		node.children.forEach( function ( child ) {
+			if(excRe.test(child.name)) {
+				console.log('Tutorial %s (%s) exclude by templates.excludeTutorials regex', child.title, child.name);
+				return;
+			}
 			generateTutorial( 'tutorial' + child.title, child, helper.tutorialToUrl( child.name ) );
 			saveChildren( child );
-		} );
+		});
 	}
 
-	if( tutorials && tutorials.length>0) saveChildren( tutorials );
+	if( tutorials && tutorials.children.length > 0) saveChildren( tutorials );
 };
