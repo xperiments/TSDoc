@@ -1,4 +1,4 @@
-///<reference path="../dec/Node.d.ts"/>
+///<reference path="../dec/node.d.ts"/>
 var path = require('path');
 var TSDdoc = (function () {
     function TSDdoc() {
@@ -6,15 +6,11 @@ var TSDdoc = (function () {
     TSDdoc.cmd = function () {
         var argv = require('optimist').argv;
         var fs = require('fs');
-
-        var sys = require('sys');
+        var sys = require('util');
         var exec = require('child_process').exec;
         var configFile = process.cwd() + path.sep + 'tsdoc.json';
         var readmeFile = process.cwd() + path.sep + 'readme.md';
         var configContents = fs.readFileSync(path.resolve(__dirname, '..' + path.sep + 'template' + path.sep + 'tsdoc.json'), 'utf8');
-        var nodePackage = require('./../package.json');
-        console.log('TSDOC v' + nodePackage.version);
-
         if (argv.i || argv.install) {
             var parentDir = path.resolve(process.cwd(), '..' + path.sep);
             var templateDir = path.resolve(__dirname, '..' + path.sep + 'template');
@@ -24,11 +20,15 @@ var TSDdoc = (function () {
             outConfig = outConfig.replace(/\$USERNAME\$/gi, TSDdoc.getUserName());
             outConfig = outConfig.replace(/\$YEAR\$/gi, new Date().getFullYear());
             outConfig = outConfig.replace(/\$PROJECTNAME\$/gi, TSDdoc.processPath(process.cwd().substr(process.cwd().lastIndexOf(path.sep) + 1)));
-
             fs.writeFileSync(configFile, outConfig, 'utf8');
             console.log('TSDoc tsdoc.json generated.');
             return;
-        } else {
+        }
+        else if (argv.v || argv.version) {
+            var nodePackage = require('./../package.json');
+            console.log('TSDOC v' + nodePackage.version);
+        }
+        else {
             if (fs.existsSync(configFile)) {
                 console.log('TSDoc Generating doc...');
                 var configJson = require(configFile);
@@ -47,7 +47,8 @@ var TSDdoc = (function () {
                     readme
                 ].join('');
                 exec(jsonParams, TSDdoc.onJSDoc);
-            } else {
+            }
+            else {
                 console.log('No tsdoc.json found, please use -i to generate one');
             }
         }
@@ -64,7 +65,6 @@ var TSDdoc = (function () {
         var userName = (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE);
         return userName.substr(userName.lastIndexOf(path.sep) + 1);
     };
-
     TSDdoc.getReadmeFile = function () {
         var fs = require('fs');
         var files = fs.readdirSync(process.cwd());
@@ -76,14 +76,12 @@ var TSDdoc = (function () {
         }
         return readme;
     };
-
     TSDdoc.processPath = function (path) {
         path = path.indexOf(':') != -1 ? path.split(':')[1] : path;
         path = path.replace(/\\/gi, '/');
         return path;
     };
-    TSDdoc.nodePackage = require('./../package.json');
     return TSDdoc;
-})();
+}());
+TSDdoc.nodePackage = require('./../package.json');
 (module).exports = TSDdoc;
-//# sourceMappingURL=TSDoc.js.map
