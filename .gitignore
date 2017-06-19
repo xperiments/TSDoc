@@ -22,3 +22,6 @@
 .idea/watcherTasks.xml
 
 .idea/workspace.xml
+
+# Exported modules
+/node_modules/*
