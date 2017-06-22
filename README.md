@@ -1,8 +1,8 @@
-#TSDoc#
+# TSDoc #
 
 A [JSDoc3](http://usejsdoc.org/) base themed generator generator for use with Typescript Projects, uses a highly modified version [Docstrap](https://github.com/terryweiss/docstrap/) JsDoc3 Template. 
 
-Actually it only supports parsing of plain comments, also it needs some added "manual" anotation. You can see an output [Example](http://xperiments.github.io/TSDoc/docs/index.html).
+Actually it only supports parsing of plain comments, also it needs some added "manual" annotation. You can see an output [Example](http://xperiments.github.io/TSDoc/docs/index.html).
 
 ![image](http://xperiments.github.io/TSDoc/TSDocScreen.png)
 
@@ -19,7 +19,7 @@ Actually it only supports parsing of plain comments, also it needs some added "m
 * Added Callbacks support
 * Added Events support
 * Added Tutorial support
-* Enhaced search with autocomplete
+* Enhanced search with autocomplete
 
 ### v0.0.1 ###
  
@@ -32,13 +32,13 @@ You can find annotated source files inside the output [example](http://xperiment
 
 
 
-## Instalation ##
+## Installation ##
 
 	sudo npm install tsdoc -g
 	
 ## Preparing your project ##
 
-###Configuration###
+### Configuration ###
 
 TSDoc uses the same [conf.json](http://usejsdoc.org/about-configuring-jsdoc.html) (now tsdoc.json) config file used in JsDoc3, but adds the following new options:
 
@@ -53,7 +53,7 @@ TSDoc uses the same [conf.json](http://usejsdoc.org/about-configuring-jsdoc.html
 	}
 
 
-####Options####
+#### Options ####
 
 * __source__ Source folder where search .ts files
 * __destination__ Documentation output folder
@@ -66,17 +66,17 @@ TSDoc uses the same [conf.json](http://usejsdoc.org/about-configuring-jsdoc.html
 
 ### Adding a default tsdoc.json file
 
-You can automatically add a new tsdoc.json file to any folder in yor system, typing in your console:
+You can automatically add a new tsdoc.json file to any folder in your system, typing in your console:
 
 	$> tsdoc -i
 
 ## Command line options ##
 
 	$> tsdoc -i [--install]
-	This will install the necesary tsdoc files to the current working directory.
+	This will install the necessary tsdoc files to the current working directory.
 
 	$> tsdoc
-	Generaties documentation from tsdoc.json settings.
+	Generates documentation from tsdoc.json settings.
 	
 ## License ##
 		
