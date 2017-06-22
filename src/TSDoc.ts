@@ -1,4 +1,4 @@
-///<reference path="../dec/Node.d.ts"/>
+///<reference path="../dec/node.d.ts"/>
 var path = require('path');
 class TSDdoc
 {
@@ -9,13 +9,11 @@ class TSDdoc
 		var argv = require('optimist').argv;
 		var fs = require('fs');
 
-		var sys = require('sys')
+		var sys = require('util')
 		var exec = require('child_process').exec;
 		var configFile = process.cwd()+path.sep+'tsdoc.json';
 		var readmeFile = process.cwd()+path.sep+'readme.md';
 		var configContents = fs.readFileSync(path.resolve( __dirname, '..'+path.sep+'template'+path.sep+'tsdoc.json'),'utf8');
-		var nodePackage = require( './../package.json' );
-		console.log( 'TSDOC v'+nodePackage.version );
 
 		if( argv.i || argv.install )
 		{
@@ -32,6 +30,10 @@ class TSDdoc
 			fs.writeFileSync( configFile, outConfig, 'utf8');
 			console.log('TSDoc tsdoc.json generated.');
 			return;
+		}
+		else if (argv.v ||argv.version){
+			var nodePackage = require( './../package.json' );
+			console.log( 'TSDOC v'+nodePackage.version );
 		}
 		else
 		{
